@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -305,7 +305,7 @@ func (i *InputRichMessage) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.Blocks = make([]PageBlockClass, 0, headerLen%bin.PreallocateLimit)
+			i.Blocks = make([]PageBlockClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePageBlock(b)
@@ -322,7 +322,7 @@ func (i *InputRichMessage) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.Photos = make([]InputPhotoClass, 0, headerLen%bin.PreallocateLimit)
+			i.Photos = make([]InputPhotoClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeInputPhoto(b)
@@ -339,7 +339,7 @@ func (i *InputRichMessage) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.Documents = make([]InputDocumentClass, 0, headerLen%bin.PreallocateLimit)
+			i.Documents = make([]InputDocumentClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeInputDocument(b)
@@ -356,7 +356,7 @@ func (i *InputRichMessage) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.Users = make([]InputUserClass, 0, headerLen%bin.PreallocateLimit)
+			i.Users = make([]InputUserClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeInputUser(b)
@@ -709,7 +709,7 @@ func (i *InputRichMessageHTML) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.Files = make([]InputRichFileClass, 0, headerLen%bin.PreallocateLimit)
+			i.Files = make([]InputRichFileClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeInputRichFile(b)
@@ -1005,7 +1005,7 @@ func (i *InputRichMessageMarkdown) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.Files = make([]InputRichFileClass, 0, headerLen%bin.PreallocateLimit)
+			i.Files = make([]InputRichFileClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeInputRichFile(b)

@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/bin"
+	"github.com/owpengram/owpengram-td/bin"
 )
 
 // IntermediateClientStart is starting bytes sent by client in Intermediate mode.
@@ -101,8 +101,7 @@ func readIntermediate(r io.Reader, b *bin.Buffer, padding bool) error {
 		return err
 	}
 
-	b.ResetN(n)
-	if _, err := io.ReadFull(r, b.Buf); err != nil {
+	if err := readPayload(r, b, n); err != nil {
 		return errors.Wrap(err, "read payload")
 	}
 

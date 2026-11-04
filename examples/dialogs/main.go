@@ -22,13 +22,13 @@ import (
 
 	"github.com/gotd/log/logzap"
 
-	"github.com/gotd/td/examples"
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/telegram/auth"
-	"github.com/gotd/td/telegram/query"
-	"github.com/gotd/td/telegram/query/dialogs"
-	"github.com/gotd/td/telegram/query/messages"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/examples"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/telegram/auth"
+	"github.com/owpengram/owpengram-td/telegram/query"
+	"github.com/owpengram/owpengram-td/telegram/query/dialogs"
+	"github.com/owpengram/owpengram-td/telegram/query/messages"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // errDone stops an iterator early.

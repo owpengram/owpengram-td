@@ -1,7 +1,7 @@
 package e2e
 
 import (
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // EventBuilder struct.

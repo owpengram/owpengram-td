@@ -3,9 +3,9 @@ package telegram
 import (
 	"context"
 
-	"github.com/gotd/td/telegram/auth"
-	"github.com/gotd/td/telegram/internal/manager"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/auth"
+	"github.com/owpengram/owpengram-td/telegram/internal/manager"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func (c *Client) dcTransferSetup(dcID int) manager.SetupCallback {

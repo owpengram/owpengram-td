@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func TestFormattedDateFormat(t *testing.T) {

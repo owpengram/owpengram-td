@@ -10,10 +10,10 @@ import (
 	"github.com/go-faster/errors"
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/proto"
-	"github.com/gotd/td/proto/codec"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/proto"
+	"github.com/owpengram/owpengram-td/proto/codec"
 )
 
 // https://core.telegram.org/mtproto/description#message-identifier-msg-id
@@ -90,20 +90,10 @@ func (c *Conn) consumeMessage(ctx context.Context, buf *bin.Buffer) error {
 
 	needAck := (msg.SeqNo & 0x01) != 0
 	if needAck {
-		// Enqueue message id for acknowledge. This can block if the ack loop
-		// is stuck (e.g. writing acks over a half-open connection), which would
-		// stall message consumption. Trace slow enqueues to surface it.
-		start := c.clock.Now()
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
 		case c.ackSendChan <- msg.MessageID:
-			if waited := c.clock.Now().Sub(start); waited > slowWriteThreshold {
-				c.log.Warn(ctx, "Slow ack enqueue (ack loop may be stalled)",
-					log.Int64("msg_id", msg.MessageID),
-					log.Duration("waited", waited),
-				)
-			}
 		}
 	}
 
@@ -164,6 +154,10 @@ func (c *Conn) readLoop(ctx context.Context) (err error) {
 	)
 	defer handlers.Wait()
 
+	conn, ok := c.transportConn()
+	if !ok {
+		return ErrTransportNotReady
+	}
 	for {
 		// We've tried multiple ways to reduce allocations via reusing buffer,
 		// but naive implementation induces high idle memory waste.
@@ -182,7 +176,7 @@ func (c *Conn) readLoop(ctx context.Context) (err error) {
 			return errors.Wrap(err, "halting")
 		}
 
-		if err := c.conn.Recv(ctx, buf); err != nil {
+		if err := conn.Recv(ctx, buf); err != nil {
 			select {
 			case <-ctx.Done():
 				return ctx.Err()

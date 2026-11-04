@@ -10,10 +10,10 @@ import (
 	"github.com/go-faster/errors"
 	"github.com/mdp/qrterminal/v3"
 
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/telegram/auth"
-	"github.com/gotd/td/telegram/auth/qrlogin"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/telegram/auth"
+	"github.com/owpengram/owpengram-td/telegram/auth/qrlogin"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // QRAuth makes sure the client is authorized, running an interactive QR login

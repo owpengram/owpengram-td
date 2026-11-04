@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -328,7 +328,7 @@ func (u *PaymentsUpdateStarGiftCollectionRequest) DecodeBare(b *bin.Buffer) erro
 		}
 
 		if headerLen > 0 {
-			u.DeleteStargift = make([]InputSavedStarGiftClass, 0, headerLen%bin.PreallocateLimit)
+			u.DeleteStargift = make([]InputSavedStarGiftClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeInputSavedStarGift(b)
@@ -345,7 +345,7 @@ func (u *PaymentsUpdateStarGiftCollectionRequest) DecodeBare(b *bin.Buffer) erro
 		}
 
 		if headerLen > 0 {
-			u.AddStargift = make([]InputSavedStarGiftClass, 0, headerLen%bin.PreallocateLimit)
+			u.AddStargift = make([]InputSavedStarGiftClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeInputSavedStarGift(b)
@@ -362,7 +362,7 @@ func (u *PaymentsUpdateStarGiftCollectionRequest) DecodeBare(b *bin.Buffer) erro
 		}
 
 		if headerLen > 0 {
-			u.Order = make([]InputSavedStarGiftClass, 0, headerLen%bin.PreallocateLimit)
+			u.Order = make([]InputSavedStarGiftClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeInputSavedStarGift(b)

@@ -6,14 +6,14 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/telegram/downloader"
-	"github.com/gotd/td/telegram/message/peer"
-	"github.com/gotd/td/telegram/query"
-	"github.com/gotd/td/telegram/query/channels/participants"
-	"github.com/gotd/td/telegram/query/dialogs"
-	"github.com/gotd/td/telegram/query/messages"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/telegram/downloader"
+	"github.com/owpengram/owpengram-td/telegram/message/peer"
+	"github.com/owpengram/owpengram-td/telegram/query"
+	"github.com/owpengram/owpengram-td/telegram/query/channels/participants"
+	"github.com/owpengram/owpengram-td/telegram/query/dialogs"
+	"github.com/owpengram/owpengram-td/telegram/query/messages"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func ExampleQuery_iterAllMessages() {

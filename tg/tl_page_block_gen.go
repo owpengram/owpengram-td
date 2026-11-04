@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -1676,7 +1676,7 @@ func (p *PageBlockList) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			p.Items = make([]PageListItemClass, 0, headerLen%bin.PreallocateLimit)
+			p.Items = make([]PageListItemClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePageListItem(b)
@@ -3548,7 +3548,7 @@ func (p *PageBlockEmbedPost) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			p.Blocks = make([]PageBlockClass, 0, headerLen%bin.PreallocateLimit)
+			p.Blocks = make([]PageBlockClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePageBlock(b)
@@ -3773,7 +3773,7 @@ func (p *PageBlockCollage) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			p.Items = make([]PageBlockClass, 0, headerLen%bin.PreallocateLimit)
+			p.Items = make([]PageBlockClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePageBlock(b)
@@ -3958,7 +3958,7 @@ func (p *PageBlockSlideshow) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			p.Items = make([]PageBlockClass, 0, headerLen%bin.PreallocateLimit)
+			p.Items = make([]PageBlockClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePageBlock(b)
@@ -4664,7 +4664,7 @@ func (p *PageBlockTable) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			p.Rows = make([]PageTableRow, 0, headerLen%bin.PreallocateLimit)
+			p.Rows = make([]PageTableRow, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value PageTableRow
@@ -4962,7 +4962,7 @@ func (p *PageBlockOrderedList) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			p.Items = make([]PageListOrderedItemClass, 0, headerLen%bin.PreallocateLimit)
+			p.Items = make([]PageListOrderedItemClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePageListOrderedItem(b)
@@ -5243,7 +5243,7 @@ func (p *PageBlockDetails) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			p.Blocks = make([]PageBlockClass, 0, headerLen%bin.PreallocateLimit)
+			p.Blocks = make([]PageBlockClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePageBlock(b)
@@ -5456,7 +5456,7 @@ func (p *PageBlockRelatedArticles) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			p.Articles = make([]PageRelatedArticle, 0, headerLen%bin.PreallocateLimit)
+			p.Articles = make([]PageRelatedArticle, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value PageRelatedArticle
@@ -7235,7 +7235,7 @@ func (p *PageBlockBlockquoteBlocks) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			p.Blocks = make([]PageBlockClass, 0, headerLen%bin.PreallocateLimit)
+			p.Blocks = make([]PageBlockClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePageBlock(b)
@@ -7470,7 +7470,7 @@ func (p *PageBlockButtonRow) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			p.Buttons = make([]PageButton, 0, headerLen%bin.PreallocateLimit)
+			p.Buttons = make([]PageButton, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value PageButton

@@ -1,8 +1,8 @@
 package inline
 
 import (
-	"github.com/gotd/td/telegram/message/markup"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/message/markup"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // MessageGameBuilder is a builder of inline result game message.

@@ -13,8 +13,8 @@ import (
 
 	"github.com/gotd/log/logzap"
 
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // gateChannelDiffAPI is an API stub whose UpdatesGetChannelDifference blocks on

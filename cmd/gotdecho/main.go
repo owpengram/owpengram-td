@@ -12,9 +12,9 @@ import (
 
 	"github.com/gotd/log/logzap"
 
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/telegram/message"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/telegram/message"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func run(ctx context.Context) error {

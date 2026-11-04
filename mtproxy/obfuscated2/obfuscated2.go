@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/mtproxy"
+	"github.com/owpengram/owpengram-td/mtproxy"
 )
 
 // Obfuscated2 implements obfuscated2 obfuscation protocol.

@@ -14,12 +14,12 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/session"
-	"github.com/gotd/td/telegram/auth"
-	"github.com/gotd/td/telegram/dcs"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/session"
+	"github.com/owpengram/owpengram-td/telegram/auth"
+	"github.com/owpengram/owpengram-td/telegram/dcs"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 func sessionDir() (string, error) {

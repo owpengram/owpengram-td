@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -547,7 +547,7 @@ func (u *UpdateDeleteMessages) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Messages = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Messages = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -1548,7 +1548,7 @@ func (u *UpdateUserName) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Usernames = make([]Username, 0, headerLen%bin.PreallocateLimit)
+			u.Usernames = make([]Username, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value Username
@@ -3169,7 +3169,7 @@ func (u *UpdateDCOptions) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.DCOptions = make([]DCOption, 0, headerLen%bin.PreallocateLimit)
+			u.DCOptions = make([]DCOption, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value DCOption
@@ -3650,7 +3650,7 @@ func (u *UpdateServiceNotification) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Entities = make([]MessageEntityClass, 0, headerLen%bin.PreallocateLimit)
+			u.Entities = make([]MessageEntityClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeMessageEntity(b)
@@ -3912,7 +3912,7 @@ func (u *UpdatePrivacy) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Rules = make([]PrivacyRuleClass, 0, headerLen%bin.PreallocateLimit)
+			u.Rules = make([]PrivacyRuleClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePrivacyRule(b)
@@ -5122,7 +5122,7 @@ func (u *UpdateReadMessagesContents) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Messages = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Messages = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -6243,7 +6243,7 @@ func (u *UpdateDeleteChannelMessages) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Messages = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Messages = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -7034,7 +7034,7 @@ func (u *UpdateStickerSetsOrder) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Order = make([]int64, 0, headerLen%bin.PreallocateLimit)
+			u.Order = make([]int64, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Long()
@@ -10744,7 +10744,7 @@ func (u *UpdatePinnedDialogs) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Order = make([]DialogPeerClass, 0, headerLen%bin.PreallocateLimit)
+			u.Order = make([]DialogPeerClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeDialogPeer(b)
@@ -12478,7 +12478,7 @@ func (u *UpdateChannelReadMessagesContents) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Messages = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Messages = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -13805,7 +13805,7 @@ func (u *UpdateFolderPeers) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.FolderPeers = make([]FolderPeer, 0, headerLen%bin.PreallocateLimit)
+			u.FolderPeers = make([]FolderPeer, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value FolderPeer
@@ -14155,7 +14155,7 @@ func (u *UpdatePeerLocated) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Peers = make([]PeerLocatedClass, 0, headerLen%bin.PreallocateLimit)
+			u.Peers = make([]PeerLocatedClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePeerLocated(b)
@@ -14532,7 +14532,7 @@ func (u *UpdateDeleteScheduledMessages) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Messages = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Messages = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -14549,7 +14549,7 @@ func (u *UpdateDeleteScheduledMessages) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.SentMessages = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.SentMessages = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -15200,7 +15200,7 @@ func (u *UpdateMessagePollVote) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Options = make([][]byte, 0, headerLen%bin.PreallocateLimit)
+			u.Options = make([][]byte, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Bytes()
@@ -15217,7 +15217,7 @@ func (u *UpdateMessagePollVote) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Positions = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Positions = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -15628,7 +15628,7 @@ func (u *UpdateDialogFilterOrder) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Order = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Order = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -17363,7 +17363,7 @@ func (u *UpdatePinnedMessages) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Messages = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Messages = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -17657,7 +17657,7 @@ func (u *UpdatePinnedChannelMessages) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Messages = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Messages = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -18053,7 +18053,7 @@ func (u *UpdateGroupCallParticipants) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Participants = make([]GroupCallParticipant, 0, headerLen%bin.PreallocateLimit)
+			u.Participants = make([]GroupCallParticipant, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value GroupCallParticipant
@@ -20050,7 +20050,7 @@ func (u *UpdateBotCommands) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Commands = make([]BotCommand, 0, headerLen%bin.PreallocateLimit)
+			u.Commands = make([]BotCommand, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value BotCommand
@@ -20260,7 +20260,7 @@ func (u *UpdatePendingJoinRequests) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.RecentRequesters = make([]int64, 0, headerLen%bin.PreallocateLimit)
+			u.RecentRequesters = make([]int64, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Long()
@@ -22693,7 +22693,7 @@ func (u *UpdateMessageExtendedMedia) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.ExtendedMedia = make([]MessageExtendedMediaClass, 0, headerLen%bin.PreallocateLimit)
+			u.ExtendedMedia = make([]MessageExtendedMediaClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeMessageExtendedMedia(b)
@@ -24732,7 +24732,7 @@ func (u *UpdateBotMessageReaction) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.OldReactions = make([]ReactionClass, 0, headerLen%bin.PreallocateLimit)
+			u.OldReactions = make([]ReactionClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeReaction(b)
@@ -24749,7 +24749,7 @@ func (u *UpdateBotMessageReaction) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.NewReactions = make([]ReactionClass, 0, headerLen%bin.PreallocateLimit)
+			u.NewReactions = make([]ReactionClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeReaction(b)
@@ -25041,7 +25041,7 @@ func (u *UpdateBotMessageReactions) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Reactions = make([]ReactionCount, 0, headerLen%bin.PreallocateLimit)
+			u.Reactions = make([]ReactionCount, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value ReactionCount
@@ -25467,7 +25467,7 @@ func (u *UpdatePinnedSavedDialogs) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Order = make([]DialogPeerClass, 0, headerLen%bin.PreallocateLimit)
+			u.Order = make([]DialogPeerClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeDialogPeer(b)
@@ -25880,7 +25880,7 @@ func (u *UpdateQuickReplies) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.QuickReplies = make([]QuickReply, 0, headerLen%bin.PreallocateLimit)
+			u.QuickReplies = make([]QuickReply, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value QuickReply
@@ -26476,7 +26476,7 @@ func (u *UpdateDeleteQuickReplyMessages) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Messages = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Messages = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -27416,7 +27416,7 @@ func (u *UpdateBotDeleteBusinessMessage) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Messages = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Messages = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -29038,7 +29038,7 @@ func (u *UpdateGroupCallChainBlocks) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Blocks = make([][]byte, 0, headerLen%bin.PreallocateLimit)
+			u.Blocks = make([][]byte, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Bytes()
@@ -30502,7 +30502,7 @@ func (u *UpdatePinnedForumTopics) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Order = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Order = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -30691,7 +30691,7 @@ func (u *UpdateDeleteGroupCallMessages) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Messages = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.Messages = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -31935,7 +31935,7 @@ func (u *UpdateBotGuestChatQuery) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.ReferenceMessages = make([]MessageClass, 0, headerLen%bin.PreallocateLimit)
+			u.ReferenceMessages = make([]MessageClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeMessage(b)
@@ -33349,7 +33349,7 @@ func (u *UpdateDeleteEphemeralMessages) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.IDs = make([]int, 0, headerLen%bin.PreallocateLimit)
+			u.IDs = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -35086,7 +35086,7 @@ func (u *UpdateWalletTonConnectPendingDisconnect) DecodeBare(b *bin.Buffer) erro
 		}
 
 		if headerLen > 0 {
-			u.SessionIDs = make([]int64, 0, headerLen%bin.PreallocateLimit)
+			u.SessionIDs = make([]int64, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Long()

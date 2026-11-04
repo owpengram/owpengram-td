@@ -14,15 +14,15 @@ import (
 	"github.com/gotd/log"
 	"github.com/gotd/log/logzap"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/mtproto"
-	"github.com/gotd/td/pool"
-	"github.com/gotd/td/rpc"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/telegram/internal/manager"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/mtproto"
+	"github.com/owpengram/owpengram-td/pool"
+	"github.com/owpengram/owpengram-td/rpc"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/telegram/internal/manager"
+	"github.com/owpengram/owpengram-td/tg"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 type migrationTestHandler func(id int64, dc int, body bin.Encoder) (bin.Encoder, error)

@@ -7,16 +7,16 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/require"
 	"github.com/gotd/log"
+	"github.com/stretchr/testify/require"
 
 	"github.com/gotd/neo"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/proto"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/testutil"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/proto"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/testutil"
 )
 
 func TestCheckMessageID(t *testing.T) {

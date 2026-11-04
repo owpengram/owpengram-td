@@ -12,10 +12,10 @@ import (
 	"github.com/gotd/log"
 	"github.com/gotd/log/logzap"
 
-	"github.com/gotd/td/fileid"
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/telegram/downloader"
-	"github.com/gotd/td/testutil"
+	"github.com/owpengram/owpengram-td/fileid"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/telegram/downloader"
+	"github.com/owpengram/owpengram-td/testutil"
 )
 
 func runBot(ctx context.Context, token, fileID string, logger log.Logger) error {

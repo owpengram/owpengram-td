@@ -3,7 +3,7 @@ package fileid
 import (
 	"encoding/base64"
 
-	"github.com/gotd/td/bin"
+	"github.com/owpengram/owpengram-td/bin"
 )
 
 // EncodeFileID parses FileID to a string.

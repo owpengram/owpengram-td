@@ -7,8 +7,8 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/mtproxy"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/mtproxy"
 )
 
 // FakeTLS implements FakeTLS obfuscation protocol.

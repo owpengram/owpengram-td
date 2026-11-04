@@ -6,14 +6,14 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/mt"
-	"github.com/gotd/td/mtproto"
-	"github.com/gotd/td/proto"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/tmap"
-	"github.com/gotd/td/transport"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/mt"
+	"github.com/owpengram/owpengram-td/mtproto"
+	"github.com/owpengram/owpengram-td/proto"
+	"github.com/owpengram/owpengram-td/tg"
+	"github.com/owpengram/owpengram-td/tmap"
+	"github.com/owpengram/owpengram-td/transport"
 )
 
 // ServerOptions of Server.

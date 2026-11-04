@@ -3,7 +3,7 @@ package auth
 import (
 	"io"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Client implements Telegram authentication.

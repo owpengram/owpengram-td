@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -148,7 +148,7 @@ func (t *TestVectorVector) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			t.Value = make([][]string, 0, headerLen%bin.PreallocateLimit)
+			t.Value = make([][]string, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			innerLen, err := b.VectorHeader()
@@ -158,9 +158,9 @@ func (t *TestVectorVector) DecodeBare(b *bin.Buffer) error {
 
 			var row []string
 			if innerLen > 0 {
-				row = make([]string, 0, innerLen%bin.PreallocateLimit)
+				row = make([]string, 0, min(innerLen, bin.PreallocateLimit))
 			}
-			for innerIndex := 0; innerIndex < innerLen; innerLen++ {
+			for innerIndex := 0; innerIndex < innerLen; innerIndex++ {
 				value, err := b.String()
 				if err != nil {
 					return fmt.Errorf("unable to decode testVectorVector#69e8846c: field value: %w", err)

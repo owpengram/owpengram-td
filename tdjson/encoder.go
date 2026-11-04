@@ -7,7 +7,7 @@ import (
 
 	"github.com/go-faster/jx"
 
-	"github.com/gotd/td/bin"
+	"github.com/owpengram/owpengram-td/bin"
 )
 
 // Encoder is a simple wrapper around jx.Encoder to conform TL type system.

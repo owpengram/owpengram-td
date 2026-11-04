@@ -9,8 +9,8 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // QR implements Telegram QR login flow.

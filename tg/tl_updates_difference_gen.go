@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -419,7 +419,7 @@ func (d *UpdatesDifference) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			d.NewMessages = make([]MessageClass, 0, headerLen%bin.PreallocateLimit)
+			d.NewMessages = make([]MessageClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeMessage(b)
@@ -436,7 +436,7 @@ func (d *UpdatesDifference) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			d.NewEncryptedMessages = make([]EncryptedMessageClass, 0, headerLen%bin.PreallocateLimit)
+			d.NewEncryptedMessages = make([]EncryptedMessageClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeEncryptedMessage(b)
@@ -453,7 +453,7 @@ func (d *UpdatesDifference) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			d.OtherUpdates = make([]UpdateClass, 0, headerLen%bin.PreallocateLimit)
+			d.OtherUpdates = make([]UpdateClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUpdate(b)
@@ -470,7 +470,7 @@ func (d *UpdatesDifference) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			d.Chats = make([]ChatClass, 0, headerLen%bin.PreallocateLimit)
+			d.Chats = make([]ChatClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeChat(b)
@@ -487,7 +487,7 @@ func (d *UpdatesDifference) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			d.Users = make([]UserClass, 0, headerLen%bin.PreallocateLimit)
+			d.Users = make([]UserClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUser(b)
@@ -807,7 +807,7 @@ func (d *UpdatesDifferenceSlice) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			d.NewMessages = make([]MessageClass, 0, headerLen%bin.PreallocateLimit)
+			d.NewMessages = make([]MessageClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeMessage(b)
@@ -824,7 +824,7 @@ func (d *UpdatesDifferenceSlice) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			d.NewEncryptedMessages = make([]EncryptedMessageClass, 0, headerLen%bin.PreallocateLimit)
+			d.NewEncryptedMessages = make([]EncryptedMessageClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeEncryptedMessage(b)
@@ -841,7 +841,7 @@ func (d *UpdatesDifferenceSlice) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			d.OtherUpdates = make([]UpdateClass, 0, headerLen%bin.PreallocateLimit)
+			d.OtherUpdates = make([]UpdateClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUpdate(b)
@@ -858,7 +858,7 @@ func (d *UpdatesDifferenceSlice) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			d.Chats = make([]ChatClass, 0, headerLen%bin.PreallocateLimit)
+			d.Chats = make([]ChatClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeChat(b)
@@ -875,7 +875,7 @@ func (d *UpdatesDifferenceSlice) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			d.Users = make([]UserClass, 0, headerLen%bin.PreallocateLimit)
+			d.Users = make([]UserClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUser(b)

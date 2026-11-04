@@ -1,7 +1,7 @@
 package inline
 
 import (
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // PhotoResultBuilder is photo result option builder.

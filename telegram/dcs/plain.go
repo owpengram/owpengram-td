@@ -9,12 +9,12 @@ import (
 	"github.com/go-faster/errors"
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/mtproxy"
-	"github.com/gotd/td/mtproxy/obfuscator"
-	"github.com/gotd/td/proto/codec"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/transport"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/mtproxy"
+	"github.com/owpengram/owpengram-td/mtproxy/obfuscator"
+	"github.com/owpengram/owpengram-td/proto/codec"
+	"github.com/owpengram/owpengram-td/tg"
+	"github.com/owpengram/owpengram-td/transport"
 )
 
 var _ Resolver = plain{}

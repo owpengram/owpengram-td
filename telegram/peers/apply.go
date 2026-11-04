@@ -6,8 +6,8 @@ import (
 	"github.com/go-faster/errors"
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/constant"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/constant"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func (m *Manager) applyUsers(ctx context.Context, input ...tg.UserClass) error {

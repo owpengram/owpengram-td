@@ -5,8 +5,8 @@ import (
 	"io"
 	"testing"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/testutil"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/testutil"
 )
 
 func genMessageAndAuthKeys() (Key, bin.Int128) {

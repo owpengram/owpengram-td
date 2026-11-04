@@ -18,7 +18,7 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/crypto"
+	"github.com/owpengram/owpengram-td/crypto"
 )
 
 //go:embed _template/*.tmpl

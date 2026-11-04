@@ -13,17 +13,17 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/mtproto"
-	"github.com/gotd/td/oteltg"
-	"github.com/gotd/td/pool"
-	"github.com/gotd/td/session"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/telegram/dcs"
-	"github.com/gotd/td/telegram/internal/manager"
-	"github.com/gotd/td/telegram/internal/version"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/mtproto"
+	"github.com/owpengram/owpengram-td/oteltg"
+	"github.com/owpengram/owpengram-td/pool"
+	"github.com/owpengram/owpengram-td/session"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/telegram/dcs"
+	"github.com/owpengram/owpengram-td/telegram/internal/manager"
+	"github.com/owpengram/owpengram-td/telegram/internal/version"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // UpdateHandler will be called on received updates from Telegram.
@@ -83,9 +83,6 @@ type Client struct {
 
 	// Telegram device information.
 	device DeviceConfig // immutable
-
-	// Schema layer requested via invokeWithLayer.
-	layer int // immutable
 
 	// MTProto options.
 	opts mtproto.Options // immutable
@@ -199,7 +196,6 @@ func NewClient(appID int, appHash string, opt Options) *Client {
 		onConnectionState: opt.OnConnectionState,
 		clock:             opt.Clock,
 		device:            opt.Device,
-		layer:             opt.Layer,
 		migrationTimeout:  opt.MigrationTimeout,
 		noUpdatesMode:     opt.NoUpdates,
 		mw:                opt.Middlewares,

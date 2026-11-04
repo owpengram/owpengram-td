@@ -3,7 +3,7 @@ package exchange
 import (
 	"crypto/rsa"
 
-	"github.com/gotd/td/crypto"
+	"github.com/owpengram/owpengram-td/crypto"
 )
 
 // PublicKey is a public Telegram server key.

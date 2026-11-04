@@ -1,6 +1,6 @@
 package mtproto
 
-import "github.com/gotd/td/crypto"
+import "github.com/owpengram/owpengram-td/crypto"
 
 // Session represents connection state.
 type Session struct {

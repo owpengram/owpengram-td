@@ -9,9 +9,9 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/gotd/log"
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/pool"
-	"github.com/gotd/td/rpc"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/pool"
+	"github.com/owpengram/owpengram-td/rpc"
 )
 
 // notifyInvokeConn is a fake connection which always fails Invoke with given
@@ -51,6 +51,40 @@ func (okInvokeConn) Run(ctx context.Context) error {
 func (okInvokeConn) Invoke(context.Context, bin.Encoder, bin.Decoder) error { return nil }
 
 func (okInvokeConn) Ping(context.Context) error { return nil }
+
+type notifyPingConn struct {
+	err    error
+	called chan struct{}
+	once   sync.Once
+}
+
+func (c *notifyPingConn) Run(ctx context.Context) error {
+	<-ctx.Done()
+	return ctx.Err()
+}
+
+func (*notifyPingConn) Invoke(context.Context, bin.Encoder, bin.Decoder) error { return nil }
+
+func (c *notifyPingConn) Ping(context.Context) error {
+	c.once.Do(func() { close(c.called) })
+	return c.err
+}
+
+func TestClientPingRetriesOnReplacementConnection(t *testing.T) {
+	client := Client{log: log.For(log.Nop)}
+	client.init()
+	dead := &notifyPingConn{err: errors.Wrap(pool.ErrConnDead, "not ready"), called: make(chan struct{})}
+	client.conn = dead
+
+	go func() {
+		<-dead.called
+		client.connMux.Lock()
+		client.replaceConn(okInvokeConn{})
+		client.connMux.Unlock()
+	}()
+
+	require.NoError(t, client.Ping(context.Background()))
+}
 
 func TestClient_invokeConnRetriesOnNewConn(t *testing.T) {
 	for _, tt := range []struct {

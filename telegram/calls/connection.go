@@ -18,7 +18,7 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Conn is the media transport of an established call. It bridges the Telegram

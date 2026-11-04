@@ -4,7 +4,7 @@ package entity
 import (
 	"context"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 var (
@@ -479,23 +479,4 @@ func DiffDelete() Formatter {
 // See https://core.telegram.org/constructor/messageEntityDiffDelete.
 func (b *Builder) DiffDelete(s string) *Builder {
 	return b.Format(s, DiffDelete())
-}
-
-// TonAddress creates Formatter of TonAddress message entity.
-//
-// See https://core.telegram.org/constructor/messageEntityTonAddress.
-func TonAddress() Formatter {
-	return func(offset, length int) tg.MessageEntityClass {
-		return &tg.MessageEntityTonAddress{
-			Offset: offset,
-			Length: length,
-		}
-	}
-}
-
-// TonAddress adds and formats message as TonAddress message entity.
-//
-// See https://core.telegram.org/constructor/messageEntityTonAddress.
-func (b *Builder) TonAddress(s string) *Builder {
-	return b.Format(s, TonAddress())
 }

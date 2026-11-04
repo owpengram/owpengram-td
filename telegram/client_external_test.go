@@ -14,14 +14,14 @@ import (
 
 	"github.com/gotd/log/logzap"
 
-	"github.com/gotd/td/session"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/telegram/dcs"
-	"github.com/gotd/td/telegram/internal/e2etest"
-	"github.com/gotd/td/testutil"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/transport"
+	"github.com/owpengram/owpengram-td/session"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/telegram/dcs"
+	"github.com/owpengram/owpengram-td/telegram/internal/e2etest"
+	"github.com/owpengram/owpengram-td/testutil"
+	"github.com/owpengram/owpengram-td/tg"
+	"github.com/owpengram/owpengram-td/transport"
 )
 
 func tryConnect(ctx context.Context, opts telegram.Options) error {

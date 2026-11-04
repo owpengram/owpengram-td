@@ -1,6 +1,6 @@
 package fileid
 
-import "github.com/gotd/td/tg"
+import "github.com/owpengram/owpengram-td/tg"
 
 // AsInputWebFileLocation converts file ID to tg.InputWebFileLocationClass.
 func (f FileID) AsInputWebFileLocation() (tg.InputWebFileLocationClass, bool) {

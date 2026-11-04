@@ -7,8 +7,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/gotd/td/telegram/message/entity"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/message/entity"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 type testCase struct {

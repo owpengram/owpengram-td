@@ -5,10 +5,10 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/mt"
-	"github.com/gotd/td/rpc"
-	"github.com/gotd/td/testutil"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/mt"
+	"github.com/owpengram/owpengram-td/rpc"
+	"github.com/owpengram/owpengram-td/testutil"
 )
 
 func TestConn_dropRPC(t *testing.T) {

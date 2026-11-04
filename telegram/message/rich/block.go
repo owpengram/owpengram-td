@@ -1,6 +1,6 @@
 package rich
 
-import "github.com/gotd/td/tg"
+import "github.com/owpengram/owpengram-td/tg"
 
 // Title returns a title block (pageBlockTitle).
 func Title(text tg.RichTextClass) *tg.PageBlockTitle {

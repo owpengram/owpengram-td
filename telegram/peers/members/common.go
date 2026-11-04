@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func convertInputUserToInputPeer(p tg.InputUserClass) tg.InputPeerClass {

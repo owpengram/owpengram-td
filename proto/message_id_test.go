@@ -9,7 +9,7 @@ import (
 
 	"github.com/gotd/neo"
 
-	"github.com/gotd/td/testutil"
+	"github.com/owpengram/owpengram-td/testutil"
 )
 
 func TestMessageID(t *testing.T) {
@@ -34,6 +34,19 @@ func TestMessageID(t *testing.T) {
 		}
 		if NewMessageID(now, 100).Type() != MessageFromClient {
 			t.Error("Mismatch")
+		}
+	})
+	t.Run("IntegralSecondClientID", func(t *testing.T) {
+		exact := time.Unix(now.Unix(), 0)
+		id := NewMessageID(exact, MessageFromClient)
+		if id.Type() != MessageFromClient {
+			t.Fatalf("message type = %s, want %s", id.Type(), MessageFromClient)
+		}
+		if uint32(id) == 0 {
+			t.Fatal("client message id has a zero lower 32-bit fractional part")
+		}
+		if delta := id.Time().Sub(exact); delta != 4*time.Nanosecond {
+			t.Fatalf("message time delta = %s, want 4ns", delta)
 		}
 	})
 	t.Run("String", func(t *testing.T) {
@@ -70,6 +83,19 @@ func TestMessageIDGen(t *testing.T) {
 		}
 
 		met[id] = true
+	}
+}
+
+func TestMessageIDGenIntegralSecond(t *testing.T) {
+	now := time.Unix(1_788_283_940, 0)
+	gen := NewMessageIDGen(func() time.Time { return now })
+	first := gen.New(MessageFromClient)
+	second := gen.New(MessageFromClient)
+	if uint32(first) == 0 || uint32(second) == 0 {
+		t.Fatalf("client message ids have zero fractional parts: %x, %x", first, second)
+	}
+	if second <= first {
+		t.Fatalf("client message ids are not increasing: %x, %x", first, second)
 	}
 }
 

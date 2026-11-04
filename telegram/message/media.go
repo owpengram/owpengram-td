@@ -5,9 +5,9 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/telegram/message/entity"
-	"github.com/gotd/td/telegram/message/styling"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/message/entity"
+	"github.com/owpengram/owpengram-td/telegram/message/styling"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func performTextOptions(media *tg.InputSingleMedia, opts []StyledTextOption) error {

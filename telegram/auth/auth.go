@@ -2,7 +2,7 @@
 package auth
 
 import (
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // IsKeyUnregistered reports whether err is AUTH_KEY_UNREGISTERED error.

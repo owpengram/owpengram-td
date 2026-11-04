@@ -6,7 +6,7 @@ package {{ $.PackageName }}
 import (
 	"context"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 var (
@@ -14,7 +14,7 @@ var (
 	_ = context.Context(nil)
 )
 
-{{- /*gotype: github.com/gotd/td/telegram/message/internal/mkrun.Config*/ -}}
+{{- /*gotype: github.com/owpengram/owpengram-td/telegram/message/internal/mkrun.Config*/ -}}
 {{- range $typ := $.Data }}
 {{ $helperName := trimPrefix ( trimPrefix $typ.Name "Input" ) "MessageEntity" -}}
 // {{ $helperName }} formats text as {{ $helperName }} entity.

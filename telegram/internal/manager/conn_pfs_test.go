@@ -8,11 +8,10 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/gotd/log"
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/mtproto"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/mtproto"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 type sessionCaptureHandler struct {
@@ -117,8 +116,6 @@ func TestConnOnSessionDeferredQueue(t *testing.T) {
 func TestConnWaitSessionRequiresConfig(t *testing.T) {
 	a := require.New(t)
 	c := &Conn{
-		clock:       clock.System,
-		log:         log.For(log.Nop),
 		sessionInit: tdsync.NewReady(),
 		gotConfig:   tdsync.NewReady(),
 		dead:        tdsync.NewReady(),

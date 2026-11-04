@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/gotd/td/tgerr"
-	"github.com/gotd/td/tgtest"
+	"github.com/owpengram/owpengram-td/tgerr"
+	"github.com/owpengram/owpengram-td/tgtest"
 )
 
 var (

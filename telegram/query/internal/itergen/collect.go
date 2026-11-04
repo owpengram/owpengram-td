@@ -10,7 +10,7 @@ import (
 	"github.com/go-faster/errors"
 	"golang.org/x/tools/go/packages"
 
-	"github.com/gotd/td/telegram/query/internal/genutil"
+	"github.com/owpengram/owpengram-td/telegram/query/internal/genutil"
 )
 
 type method struct {
@@ -113,7 +113,7 @@ func (c *collector) methods() ([]method, error) { // nolint:gocognit
 	var result []method
 
 	for _, def := range genutil.Funcs(c.pkg, func(f genutil.Func) bool {
-		return f.Args().Len() == 2 && f.Results().Len() == 2
+		return f.ReceiverNamed("Client") && f.Args().Len() == 2 && f.Results().Len() == 2
 	}) {
 		args := def.Args()
 		results := def.Results()

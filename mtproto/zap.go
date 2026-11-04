@@ -5,7 +5,7 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/bin"
+	"github.com/owpengram/owpengram-td/bin"
 )
 
 type logType struct {

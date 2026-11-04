@@ -10,16 +10,16 @@ import (
 	"github.com/gotd/log"
 	"go.uber.org/atomic"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/exchange"
-	"github.com/gotd/td/mtproto/salts"
-	"github.com/gotd/td/proto"
-	"github.com/gotd/td/rpc"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/tmap"
-	"github.com/gotd/td/transport"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/exchange"
+	"github.com/owpengram/owpengram-td/mtproto/salts"
+	"github.com/owpengram/owpengram-td/proto"
+	"github.com/owpengram/owpengram-td/rpc"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/tmap"
+	"github.com/owpengram/owpengram-td/transport"
 )
 
 // Handler will be called on received message from Telegram.
@@ -38,6 +38,11 @@ type MessageBuf interface {
 	Consume(id int64) bool
 }
 
+// ErrTransportNotReady is returned when a caller tries to write before Run
+// has established the physical transport. Lifecycle races must be surfaced as
+// an error rather than dereferencing a nil transport connection.
+var ErrTransportNotReady = errors.New("mtproto transport not ready")
+
 // Cipher handles message encryption and decryption.
 type Cipher interface {
 	DecryptFromBuffer(k crypto.AuthKey, buf *bin.Buffer) (*crypto.EncryptedMessageData, error)
@@ -53,6 +58,7 @@ type Conn struct {
 
 	dialer        Dialer
 	conn          transport.Conn
+	transportMux  sync.RWMutex
 	handler       Handler
 	rpc           *rpc.Engine
 	rsaPublicKeys []exchange.PublicKey
@@ -121,6 +127,19 @@ type Conn struct {
 	tempKeyTTL int
 	// Ensure Run once.
 	ran atomic.Bool
+}
+
+func (c *Conn) setTransport(conn transport.Conn) {
+	c.transportMux.Lock()
+	c.conn = conn
+	c.transportMux.Unlock()
+}
+
+func (c *Conn) transportConn() (transport.Conn, bool) {
+	c.transportMux.RLock()
+	conn := c.conn
+	c.transportMux.RUnlock()
+	return conn, conn != nil
 }
 
 // New creates new unstarted connection.
@@ -195,7 +214,11 @@ func (c *Conn) handleClose(ctx context.Context) error {
 	// Close RPC Engine.
 	c.rpc.ForceClose()
 	// Close connection.
-	if err := c.conn.Close(); err != nil {
+	conn, ok := c.transportConn()
+	if !ok {
+		return nil
+	}
+	if err := conn.Close(); err != nil {
 		c.log.Debug(ctx, "Failed to cleanup connection", log.Error(err))
 	}
 	return nil
@@ -241,8 +264,6 @@ func (c *Conn) Run(ctx context.Context, f func(ctx context.Context) error) error
 		g.Go("pingLoop", c.pingLoop)
 		g.Go("ackLoop", c.ackLoop)
 		g.Go("saltsLoop", c.saltLoop)
-		// Enable HTTP long-polling if the transport is HTTP; no-op otherwise.
-		c.startHTTPWait()
 		if c.pfs {
 			// Renewal loop requests reconnect before temp key expiry.
 			g.Go("tempKeyRenewal", c.tempKeyRenewalLoop)

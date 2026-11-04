@@ -8,8 +8,8 @@ import (
 	"github.com/go-faster/errors"
 	"golang.org/x/net/html"
 
-	"github.com/gotd/td/telegram/message/entity"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/message/entity"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 type htmlParser struct {

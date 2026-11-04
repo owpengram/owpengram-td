@@ -11,9 +11,9 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/telegram/dcs"
-	"github.com/gotd/td/tgacc"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/telegram/dcs"
+	"github.com/owpengram/owpengram-td/tgacc"
 )
 
 // Suite is struct which contains external E2E test parameters.

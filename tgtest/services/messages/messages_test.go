@@ -10,15 +10,15 @@ import (
 	"go.uber.org/zap/zaptest"
 
 	"github.com/gotd/log/logzap"
-	"github.com/gotd/td/session"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/tgtest"
-	"github.com/gotd/td/tgtest/cluster"
-	"github.com/gotd/td/tgtest/services"
-	"github.com/gotd/td/tgtest/services/config"
-	"github.com/gotd/td/tgtest/services/messages"
+	"github.com/owpengram/owpengram-td/session"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/tg"
+	"github.com/owpengram/owpengram-td/tgtest"
+	"github.com/owpengram/owpengram-td/tgtest/cluster"
+	"github.com/owpengram/owpengram-td/tgtest/services"
+	"github.com/owpengram/owpengram-td/tgtest/services/config"
+	"github.com/owpengram/owpengram-td/tgtest/services/messages"
 )
 
 func newClient(c *cluster.Cluster, opts telegram.Options) *telegram.Client {

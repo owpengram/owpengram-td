@@ -3,7 +3,7 @@ package qrlogin
 import (
 	"context"
 
-	"github.com/gotd/td/clock"
+	"github.com/owpengram/owpengram-td/clock"
 )
 
 // Options of QR.

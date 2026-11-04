@@ -14,9 +14,9 @@ import (
 	"github.com/gotd/log/logzap"
 	"github.com/gotd/neo"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/mt"
-	"github.com/gotd/td/testutil"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/mt"
+	"github.com/owpengram/owpengram-td/testutil"
 )
 
 type request struct {

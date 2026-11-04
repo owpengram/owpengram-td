@@ -5,8 +5,8 @@ import (
 
 	"github.com/awnumar/memguard"
 
-	"github.com/gotd/td/telegram/auth"
-	"github.com/gotd/td/telegram/auth/srpguard"
+	"github.com/owpengram/owpengram-td/telegram/auth"
+	"github.com/owpengram/owpengram-td/telegram/auth/srpguard"
 )
 
 // This example shows how to supply a 2FA password from protected memory instead

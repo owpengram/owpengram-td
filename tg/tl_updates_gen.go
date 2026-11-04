@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -619,7 +619,7 @@ func (u *UpdateShortMessage) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Entities = make([]MessageEntityClass, 0, headerLen%bin.PreallocateLimit)
+			u.Entities = make([]MessageEntityClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeMessageEntity(b)
@@ -1354,7 +1354,7 @@ func (u *UpdateShortChatMessage) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Entities = make([]MessageEntityClass, 0, headerLen%bin.PreallocateLimit)
+			u.Entities = make([]MessageEntityClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeMessageEntity(b)
@@ -1979,7 +1979,7 @@ func (u *UpdatesCombined) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Updates = make([]UpdateClass, 0, headerLen%bin.PreallocateLimit)
+			u.Updates = make([]UpdateClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUpdate(b)
@@ -1996,7 +1996,7 @@ func (u *UpdatesCombined) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Users = make([]UserClass, 0, headerLen%bin.PreallocateLimit)
+			u.Users = make([]UserClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUser(b)
@@ -2013,7 +2013,7 @@ func (u *UpdatesCombined) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Chats = make([]ChatClass, 0, headerLen%bin.PreallocateLimit)
+			u.Chats = make([]ChatClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeChat(b)
@@ -2305,7 +2305,7 @@ func (u *Updates) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Updates = make([]UpdateClass, 0, headerLen%bin.PreallocateLimit)
+			u.Updates = make([]UpdateClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUpdate(b)
@@ -2322,7 +2322,7 @@ func (u *Updates) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Users = make([]UserClass, 0, headerLen%bin.PreallocateLimit)
+			u.Users = make([]UserClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUser(b)
@@ -2339,7 +2339,7 @@ func (u *Updates) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Chats = make([]ChatClass, 0, headerLen%bin.PreallocateLimit)
+			u.Chats = make([]ChatClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeChat(b)
@@ -2749,7 +2749,7 @@ func (u *UpdateShortSentMessage) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			u.Entities = make([]MessageEntityClass, 0, headerLen%bin.PreallocateLimit)
+			u.Entities = make([]MessageEntityClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeMessageEntity(b)

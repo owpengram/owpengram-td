@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Audio creates new AudioDocumentBuilder to create audio attachment.
@@ -42,8 +42,8 @@ func (u *AudioDocumentBuilder) Duration(duration time.Duration) *AudioDocumentBu
 }
 
 // Filename sets filename of audio file.
-func (u *AudioDocumentBuilder) Filename( filename string ) *AudioDocumentBuilder {
-	u.doc.Attributes(&tg.DocumentAttributeFilename{ FileName: filename })
+func (u *AudioDocumentBuilder) Filename(filename string) *AudioDocumentBuilder {
+	u.doc.Attributes(&tg.DocumentAttributeFilename{FileName: filename})
 	return u
 }
 

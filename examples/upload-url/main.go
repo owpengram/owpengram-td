@@ -20,13 +20,13 @@ import (
 
 	"github.com/gotd/log/logzap"
 
-	"github.com/gotd/td/examples"
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/telegram/auth"
-	"github.com/gotd/td/telegram/message"
-	"github.com/gotd/td/telegram/message/html"
-	"github.com/gotd/td/telegram/uploader"
-	"github.com/gotd/td/telegram/uploader/source"
+	"github.com/owpengram/owpengram-td/examples"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/telegram/auth"
+	"github.com/owpengram/owpengram-td/telegram/message"
+	"github.com/owpengram/owpengram-td/telegram/message/html"
+	"github.com/owpengram/owpengram-td/telegram/uploader"
+	"github.com/owpengram/owpengram-td/telegram/uploader/source"
 )
 
 func run(ctx context.Context) error {

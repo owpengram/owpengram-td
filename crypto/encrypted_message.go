@@ -1,6 +1,6 @@
 package crypto
 
-import "github.com/gotd/td/bin"
+import "github.com/owpengram/owpengram-td/bin"
 
 // EncryptedMessage of protocol.
 type EncryptedMessage struct {

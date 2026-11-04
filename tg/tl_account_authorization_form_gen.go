@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -271,7 +271,7 @@ func (a *AccountAuthorizationForm) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			a.RequiredTypes = make([]SecureRequiredTypeClass, 0, headerLen%bin.PreallocateLimit)
+			a.RequiredTypes = make([]SecureRequiredTypeClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeSecureRequiredType(b)
@@ -288,7 +288,7 @@ func (a *AccountAuthorizationForm) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			a.Values = make([]SecureValue, 0, headerLen%bin.PreallocateLimit)
+			a.Values = make([]SecureValue, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value SecureValue
@@ -305,7 +305,7 @@ func (a *AccountAuthorizationForm) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			a.Errors = make([]SecureValueErrorClass, 0, headerLen%bin.PreallocateLimit)
+			a.Errors = make([]SecureValueErrorClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeSecureValueError(b)
@@ -322,7 +322,7 @@ func (a *AccountAuthorizationForm) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			a.Users = make([]UserClass, 0, headerLen%bin.PreallocateLimit)
+			a.Users = make([]UserClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUser(b)

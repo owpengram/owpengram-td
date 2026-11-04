@@ -5,8 +5,8 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/telegram/message/inline"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/message/inline"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // InlineResult is a user method to send bot inline query result message.

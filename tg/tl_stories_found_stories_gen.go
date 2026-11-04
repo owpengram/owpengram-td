@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -261,7 +261,7 @@ func (f *StoriesFoundStories) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			f.Stories = make([]FoundStory, 0, headerLen%bin.PreallocateLimit)
+			f.Stories = make([]FoundStory, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value FoundStory
@@ -285,7 +285,7 @@ func (f *StoriesFoundStories) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			f.Chats = make([]ChatClass, 0, headerLen%bin.PreallocateLimit)
+			f.Chats = make([]ChatClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeChat(b)
@@ -302,7 +302,7 @@ func (f *StoriesFoundStories) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			f.Users = make([]UserClass, 0, headerLen%bin.PreallocateLimit)
+			f.Users = make([]UserClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUser(b)

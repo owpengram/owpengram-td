@@ -6,12 +6,12 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/exchange"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/telegram/dcs"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/tgtest"
-	"github.com/gotd/td/tgtest/services/config"
+	"github.com/owpengram/owpengram-td/exchange"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/telegram/dcs"
+	"github.com/owpengram/owpengram-td/tg"
+	"github.com/owpengram/owpengram-td/tgtest"
+	"github.com/owpengram/owpengram-td/tgtest/services/config"
 )
 
 type setup struct {

@@ -1,4 +1,4 @@
-{{- /*gotype: github.com/gotd/td/gen.structDef*/ -}}
+{{- /*gotype: github.com/owpengram/owpengram-td/gen.structDef*/ -}}
 {{ define "decode" }}{{ $s := . }}
 // Decode implements bin.Decoder.
 func ({{ $s.Receiver }} *{{ $s.Name }}) Decode({{ $s.BufArg }} *bin.Buffer) error {
@@ -34,7 +34,7 @@ func ({{ $s.Receiver }} *{{ $s.Name }}) DecodeBare({{ $s.BufArg }} *bin.Buffer) 
             }
 
             if headerLen > 0 {
-                {{ $s.Receiver }}.{{ $f.Name }} = make({{ template "print_type" $f }}, 0, headerLen % bin.PreallocateLimit)
+                {{ $s.Receiver }}.{{ $f.Name }} = make({{ template "print_type" $f }}, 0, min(headerLen, bin.PreallocateLimit))
             }
             for idx := 0; idx < headerLen; idx++ {
 
@@ -46,9 +46,9 @@ func ({{ $s.Receiver }} *{{ $s.Name }}) DecodeBare({{ $s.BufArg }} *bin.Buffer) 
 
                 var row []{{ $f.Type }}
                 if innerLen > 0 {
-                    row = make([]{{ $f.Type }}, 0, innerLen % bin.PreallocateLimit)
+                    row = make([]{{ $f.Type }}, 0, min(innerLen, bin.PreallocateLimit))
                 }
-                for innerIndex := 0; innerIndex < innerLen; innerLen++ {
+                for innerIndex := 0; innerIndex < innerLen; innerIndex++ {
             {{- end }}
             {{- if $f.Interface }}
                 value, err := Decode{{ $f.InterfaceFunc }}({{ $s.BufArg }})

@@ -1,10 +1,10 @@
 package markup
 
-import "github.com/gotd/td/tg"
+import "github.com/owpengram/owpengram-td/tg"
 
 // InlineRow creates inline keyboard with single row using given buttons.
 func InlineRow(buttons ...tg.KeyboardInlineButton) tg.ReplyMarkupClass {
-	return InlineKeyboard(InlineButtonRow(buttons...))
+	return InlineKeyboard(tg.KeyboardInlineButtonRow{Buttons: buttons})
 }
 
 // InlineKeyboard creates inline keyboard using given rows.

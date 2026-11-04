@@ -10,13 +10,13 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/exchange"
-	"github.com/gotd/td/mtproto"
-	"github.com/gotd/td/proto"
-	"github.com/gotd/td/telegram/dcs"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/exchange"
+	"github.com/owpengram/owpengram-td/mtproto"
+	"github.com/owpengram/owpengram-td/proto"
+	"github.com/owpengram/owpengram-td/telegram/dcs"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 type (
@@ -125,14 +125,6 @@ type Options struct {
 	// Will be sent with session creation request.
 	Device DeviceConfig
 
-	// Layer is the schema layer to request via invokeWithLayer.
-	//
-	// If not provided, tg.Layer will be used, i.e. the layer of the schema
-	// this package is generated from. Override it only if the server must be
-	// asked for an older layer; requests are still encoded using tg.Layer
-	// schema, so a mismatch may cause decoding errors.
-	Layer int
-
 	MessageID mtproto.MessageIDSource
 	Clock     clock.Clock
 
@@ -170,9 +162,6 @@ func (opt *Options) setDefaults() {
 	}
 	if opt.DCList.Zero() {
 		opt.DCList = dcs.Prod()
-	}
-	if opt.Layer == 0 {
-		opt.Layer = tg.Layer
 	}
 	// It's okay to use zero value AckBatchSize, mtproto.Options will set defaults.
 	// It's okay to use zero value AckInterval, mtproto.Options will set defaults.

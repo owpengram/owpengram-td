@@ -10,10 +10,10 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/exchange"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/telegram/auth"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/exchange"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/telegram/auth"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 func (c *Client) runUntilRestart(ctx context.Context) error {
@@ -114,7 +114,6 @@ func (c *Client) reconnectUntilClosed(ctx context.Context) error {
 	return backoff.RetryNotify(func() error {
 		if err := c.runUntilRestart(ctx); err != nil {
 			if c.isPermanentError(err) {
-				c.log.Warn(ctx, "Permanent connection error, will not reconnect", log.Error(err))
 				return backoff.Permanent(err)
 			}
 			return err
@@ -130,7 +129,6 @@ func (c *Client) reconnectUntilClosed(ctx context.Context) error {
 		c.handlePrimaryConnDead(err)
 		c.replaceConn(c.createPrimaryConn(nil))
 		c.connMux.Unlock()
-		c.log.Debug(context.Background(), "Primary connection replaced after restart")
 	})
 }
 

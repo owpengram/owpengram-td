@@ -1,8 +1,8 @@
 package markdown
 
 import (
-	"github.com/gotd/td/telegram/message/entity"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/message/entity"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Options is options of Markdown parser.

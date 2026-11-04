@@ -7,8 +7,8 @@ import (
 
 	"golang.org/x/sync/singleflight"
 
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // LRUResolver is simple decorator for Resolver to cache result in LRU.

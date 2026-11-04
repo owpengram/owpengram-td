@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -245,7 +245,7 @@ func (c *ChatlistsChatlistInviteAlready) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			c.MissingPeers = make([]PeerClass, 0, headerLen%bin.PreallocateLimit)
+			c.MissingPeers = make([]PeerClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePeer(b)
@@ -262,7 +262,7 @@ func (c *ChatlistsChatlistInviteAlready) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			c.AlreadyPeers = make([]PeerClass, 0, headerLen%bin.PreallocateLimit)
+			c.AlreadyPeers = make([]PeerClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePeer(b)
@@ -279,7 +279,7 @@ func (c *ChatlistsChatlistInviteAlready) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			c.Chats = make([]ChatClass, 0, headerLen%bin.PreallocateLimit)
+			c.Chats = make([]ChatClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeChat(b)
@@ -296,7 +296,7 @@ func (c *ChatlistsChatlistInviteAlready) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			c.Users = make([]UserClass, 0, headerLen%bin.PreallocateLimit)
+			c.Users = make([]UserClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUser(b)
@@ -631,7 +631,7 @@ func (c *ChatlistsChatlistInvite) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			c.Peers = make([]PeerClass, 0, headerLen%bin.PreallocateLimit)
+			c.Peers = make([]PeerClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePeer(b)
@@ -648,7 +648,7 @@ func (c *ChatlistsChatlistInvite) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			c.Chats = make([]ChatClass, 0, headerLen%bin.PreallocateLimit)
+			c.Chats = make([]ChatClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeChat(b)
@@ -665,7 +665,7 @@ func (c *ChatlistsChatlistInvite) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			c.Users = make([]UserClass, 0, headerLen%bin.PreallocateLimit)
+			c.Users = make([]UserClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUser(b)

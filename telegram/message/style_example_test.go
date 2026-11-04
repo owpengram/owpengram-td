@@ -6,10 +6,10 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/telegram/message"
-	"github.com/gotd/td/telegram/message/styling"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/telegram/message"
+	"github.com/owpengram/owpengram-td/telegram/message/styling"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func sendStyledText(ctx context.Context) error {

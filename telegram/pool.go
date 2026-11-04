@@ -8,13 +8,13 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/mtproto"
-	"github.com/gotd/td/pool"
-	"github.com/gotd/td/telegram/auth"
-	"github.com/gotd/td/telegram/dcs"
-	"github.com/gotd/td/telegram/internal/manager"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/transport"
+	"github.com/owpengram/owpengram-td/mtproto"
+	"github.com/owpengram/owpengram-td/pool"
+	"github.com/owpengram/owpengram-td/telegram/auth"
+	"github.com/owpengram/owpengram-td/telegram/dcs"
+	"github.com/owpengram/owpengram-td/telegram/internal/manager"
+	"github.com/owpengram/owpengram-td/tg"
+	"github.com/owpengram/owpengram-td/transport"
 )
 
 // CloseInvoker is a closeable tg.Invoker.
@@ -147,7 +147,6 @@ func (c *Client) dc(
 			dialer, mode, c.appID,
 			options, manager.ConnOptions{
 				DC:      dcID,
-				Layer:   c.layer,
 				Device:  c.device,
 				Handler: handler,
 				Setup:   setup,

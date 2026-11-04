@@ -6,8 +6,8 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/telegram/message/peer"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/message/peer"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Elem is a dialog iterator element.
@@ -69,19 +69,24 @@ func (m *Iterator) OffsetPeer(offsetPeer tg.InputPeerClass) *Iterator {
 	return m
 }
 
-// dialogPeer extracts peer from dialog, if any.
-//
-// Some dialog types (e.g. dialogCommunity) have no peer field.
-func dialogPeer(dlg tg.DialogClass) (tg.PeerClass, bool) {
-	p, ok := dlg.(interface{ GetPeer() tg.PeerClass })
+// messageMap is a helper to store messages for multiple peers.
+type messageMap map[DialogKey]tg.NotEmptyMessage
+
+// dialogWithPeer is the capability shared by message-backed dialog
+// constructors. It deliberately is not part of tg.DialogClass: Layer 228 adds
+// dialogCommunity, which is a Dialog but has a community_id instead of a Peer.
+type dialogWithPeer interface {
+	GetPeer() tg.PeerClass
+}
+
+func peerFromDialog(dialog tg.DialogClass) (tg.PeerClass, bool) {
+	withPeer, ok := dialog.(dialogWithPeer)
 	if !ok {
 		return nil, false
 	}
-	return p.GetPeer(), true
+	peerID := withPeer.GetPeer()
+	return peerID, peerID != nil
 }
-
-// messageMap is a helper to store messages for multiple peers.
-type messageMap map[DialogKey]tg.NotEmptyMessage
 
 func (m messageMap) collect(messages tg.MessageClassArray) error {
 	for _, msg := range messages {
@@ -141,18 +146,25 @@ func (m *Iterator) apply(r tg.MessagesDialogsClass) error {
 	m.bufCur = -1
 	m.buf = m.buf[:0]
 
-	var last tg.NotEmptyMessage
+	var lastPeer tg.PeerClass
 	for _, dlg := range dialogs {
-		var p tg.InputPeerClass = &tg.InputPeerEmpty{}
-		if dlgPeer, ok := dialogPeer(dlg); ok {
-			var key DialogKey
-			if err := key.FromPeer(dlgPeer); err == nil {
-				last = msgMap[key]
-			}
+		peerID, ok := peerFromDialog(dlg)
+		if !ok {
+			// dialogCommunity has no message peer or pagination tuple. It is
+			// outside this message-dialog iterator and must not be represented
+			// as InputPeerEmpty, which would conflate two protocol concepts.
+			continue
+		}
 
-			if extracted, err := entities.ExtractPeer(dlgPeer); err == nil {
-				p = extracted
-			}
+		var last tg.NotEmptyMessage
+		var key DialogKey
+		if err := key.FromPeer(peerID); err == nil {
+			last = msgMap[key]
+		}
+
+		p, err := entities.ExtractPeer(peerID)
+		if err != nil {
+			p = &tg.InputPeerEmpty{}
 		}
 
 		m.buf = append(m.buf, Elem{
@@ -161,19 +173,17 @@ func (m *Iterator) apply(r tg.MessagesDialogsClass) error {
 			Last:     last,
 			Entities: entities,
 		})
+		lastPeer = peerID
 	}
 
 	if !m.lastBatch && len(m.buf) > 0 {
-		if last != nil {
-			m.offsetID = last.GetID()
-			m.offsetDate = last.GetDate()
+		tail := m.buf[len(m.buf)-1]
+		if tail.Last != nil {
+			m.offsetID = tail.Last.GetID()
+			m.offsetDate = tail.Last.GetDate()
 		}
 
-		dlgPeer, ok := dialogPeer(dialogs[len(m.buf)-1])
-		if !ok {
-			return errors.Errorf("get offset peer: dialog %T has no peer", dialogs[len(m.buf)-1])
-		}
-		p, err := entities.ExtractPeer(dlgPeer)
+		p, err := entities.ExtractPeer(lastPeer)
 		if err != nil {
 			return errors.Wrap(err, "get offset peer")
 		}

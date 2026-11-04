@@ -3,7 +3,7 @@ package members
 import (
 	"time"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // AdminRights represents admin right settings.

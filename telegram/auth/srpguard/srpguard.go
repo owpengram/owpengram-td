@@ -25,8 +25,8 @@ import (
 	"github.com/awnumar/memguard"
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/telegram/auth"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/auth"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // errDestroyed is returned when the provided buffer is no longer usable.

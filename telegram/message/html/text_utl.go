@@ -9,8 +9,8 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/ascii"
-	"github.com/gotd/td/telegram/message/entity"
+	"github.com/owpengram/owpengram-td/ascii"
+	"github.com/owpengram/owpengram-td/telegram/message/entity"
 )
 
 func isIPv6(str string) bool {

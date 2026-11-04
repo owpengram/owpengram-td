@@ -4,7 +4,7 @@ import (
 	"io"
 	"testing"
 
-	"github.com/gotd/td/bin"
+	"github.com/owpengram/owpengram-td/bin"
 
 	"github.com/stretchr/testify/require"
 )

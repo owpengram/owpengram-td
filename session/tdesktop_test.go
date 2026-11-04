@@ -5,9 +5,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/session/tdesktop"
-	"github.com/gotd/td/telegram/dcs"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/session/tdesktop"
+	"github.com/owpengram/owpengram-td/telegram/dcs"
 )
 
 func TestTDesktopSession(t *testing.T) {

@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -365,7 +365,7 @@ func (r *PaymentsResaleStarGifts) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			r.Gifts = make([]StarGiftClass, 0, headerLen%bin.PreallocateLimit)
+			r.Gifts = make([]StarGiftClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeStarGift(b)
@@ -389,7 +389,7 @@ func (r *PaymentsResaleStarGifts) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			r.Attributes = make([]StarGiftAttributeClass, 0, headerLen%bin.PreallocateLimit)
+			r.Attributes = make([]StarGiftAttributeClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeStarGiftAttribute(b)
@@ -413,7 +413,7 @@ func (r *PaymentsResaleStarGifts) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			r.Chats = make([]ChatClass, 0, headerLen%bin.PreallocateLimit)
+			r.Chats = make([]ChatClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeChat(b)
@@ -430,7 +430,7 @@ func (r *PaymentsResaleStarGifts) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			r.Counters = make([]StarGiftAttributeCounter, 0, headerLen%bin.PreallocateLimit)
+			r.Counters = make([]StarGiftAttributeCounter, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value StarGiftAttributeCounter
@@ -447,7 +447,7 @@ func (r *PaymentsResaleStarGifts) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			r.Users = make([]UserClass, 0, headerLen%bin.PreallocateLimit)
+			r.Users = make([]UserClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUser(b)

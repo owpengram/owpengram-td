@@ -1,7 +1,7 @@
 package peers
 
 import (
-	"github.com/gotd/td/constant"
+	"github.com/owpengram/owpengram-td/constant"
 )
 
 type peerIDSet struct {

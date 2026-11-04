@@ -6,10 +6,10 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/telegram/peers"
-	"github.com/gotd/td/telegram/peers/members"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/telegram/peers"
+	"github.com/owpengram/owpengram-td/telegram/peers/members"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func administrate(ctx context.Context) error {

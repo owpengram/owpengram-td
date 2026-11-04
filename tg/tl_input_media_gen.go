@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -407,7 +407,7 @@ func (i *InputMediaUploadedPhoto) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.Stickers = make([]InputDocumentClass, 0, headerLen%bin.PreallocateLimit)
+			i.Stickers = make([]InputDocumentClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeInputDocument(b)
@@ -1622,7 +1622,7 @@ func (i *InputMediaUploadedDocument) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.Attributes = make([]DocumentAttributeClass, 0, headerLen%bin.PreallocateLimit)
+			i.Attributes = make([]DocumentAttributeClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeDocumentAttribute(b)
@@ -1639,7 +1639,7 @@ func (i *InputMediaUploadedDocument) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.Stickers = make([]InputDocumentClass, 0, headerLen%bin.PreallocateLimit)
+			i.Stickers = make([]InputDocumentClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeInputDocument(b)
@@ -4365,7 +4365,7 @@ func (i *InputMediaPoll) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.CorrectAnswers = make([]int, 0, headerLen%bin.PreallocateLimit)
+			i.CorrectAnswers = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -4396,7 +4396,7 @@ func (i *InputMediaPoll) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.SolutionEntities = make([]MessageEntityClass, 0, headerLen%bin.PreallocateLimit)
+			i.SolutionEntities = make([]MessageEntityClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeMessageEntity(b)
@@ -5298,7 +5298,7 @@ func (i *InputMediaPaidMedia) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			i.ExtendedMedia = make([]InputMediaClass, 0, headerLen%bin.PreallocateLimit)
+			i.ExtendedMedia = make([]InputMediaClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeInputMedia(b)

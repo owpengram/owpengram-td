@@ -11,11 +11,11 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/pool"
-	"github.com/gotd/td/rpc"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/pool"
+	"github.com/owpengram/owpengram-td/rpc"
+	"github.com/owpengram/owpengram-td/tg"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // API returns *tg.Client for calling raw MTProto methods.
@@ -90,7 +90,6 @@ func (c *Client) invokeDirect(ctx context.Context, input bin.Encoder, output bin
 // invokeConn waits until the reconnection loop replaces the connection and
 // retries the request on it, see https://github.com/gotd/td/issues/1030.
 func (c *Client) invokeConn(ctx context.Context, input bin.Encoder, output bin.Decoder) error {
-	attempt := 0
 	for {
 		c.connMux.Lock()
 		conn := c.conn
@@ -106,10 +105,8 @@ func (c *Client) invokeConn(ctx context.Context, input bin.Encoder, output bin.D
 		if c.ctx != nil {
 			clientDone = c.ctx.Done()
 		}
-		attempt++
 		c.log.Debug(ctx, "Primary connection is dead, waiting for new connection to retry",
 			log.Error(err),
-			log.Int("attempt", attempt),
 		)
 		select {
 		case <-ctx.Done():
@@ -118,7 +115,6 @@ func (c *Client) invokeConn(ctx context.Context, input bin.Encoder, output bin.D
 			// Client is closed, no reconnection will happen.
 			return errors.Wrap(c.ctx.Err(), "client closed")
 		case <-connChanged:
-			c.log.Debug(ctx, "Primary connection replaced, retrying request", log.Int("attempt", attempt))
 		}
 	}
 }

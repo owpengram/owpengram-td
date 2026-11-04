@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/gotd/td/mt"
-	"github.com/gotd/td/testutil"
+	"github.com/owpengram/owpengram-td/mt"
+	"github.com/owpengram/owpengram-td/testutil"
 )
 
 func generateSalts(n int) []mt.FutureSalt {

@@ -17,6 +17,11 @@ download_schema:
 	go run ./cmd/dltl -base https://raw.githubusercontent.com/telegramdesktop/tdesktop -branch dev -dir Telegram/SourceFiles/mtproto/scheme -f api.tl -merge _schema/legacy.tl -o _schema/telegram.tl
 .PHONY: download_schema
 
+import_layer:
+	@test -n "$(REF)" || (echo "usage: make import_layer REF=<tdesktop tag or commit>" && exit 1)
+	go run ./cmd/layerimport -ref $(REF) -canonical
+.PHONY: import_layer
+
 download_public_keys:
 	go run ./cmd/dlkey -o internal/mtproto/_data/public_keys.pem
 .PHONY: download_public_keys

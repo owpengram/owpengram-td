@@ -3,7 +3,7 @@ package updates
 import (
 	"context"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // State is the user internalState.

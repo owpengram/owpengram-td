@@ -3,9 +3,9 @@ package ntp_test
 import (
 	"fmt"
 
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/clock/ntp"
-	"github.com/gotd/td/telegram"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/clock/ntp"
+	"github.com/owpengram/owpengram-td/telegram"
 )
 
 func ExampleNew() {

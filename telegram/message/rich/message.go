@@ -1,6 +1,6 @@
 package rich
 
-import "github.com/gotd/td/tg"
+import "github.com/owpengram/owpengram-td/tg"
 
 // Message assembles a [tg.InputRichMessage] from blocks and attachments.
 //

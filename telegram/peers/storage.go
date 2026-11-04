@@ -3,7 +3,7 @@ package peers
 import (
 	"context"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Value is storage value.

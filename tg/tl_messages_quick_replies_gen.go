@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -223,7 +223,7 @@ func (q *MessagesQuickReplies) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			q.QuickReplies = make([]QuickReply, 0, headerLen%bin.PreallocateLimit)
+			q.QuickReplies = make([]QuickReply, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value QuickReply
@@ -240,7 +240,7 @@ func (q *MessagesQuickReplies) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			q.Messages = make([]MessageClass, 0, headerLen%bin.PreallocateLimit)
+			q.Messages = make([]MessageClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeMessage(b)
@@ -257,7 +257,7 @@ func (q *MessagesQuickReplies) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			q.Chats = make([]ChatClass, 0, headerLen%bin.PreallocateLimit)
+			q.Chats = make([]ChatClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeChat(b)
@@ -274,7 +274,7 @@ func (q *MessagesQuickReplies) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			q.Users = make([]UserClass, 0, headerLen%bin.PreallocateLimit)
+			q.Users = make([]UserClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeUser(b)

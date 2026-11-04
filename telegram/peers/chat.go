@@ -5,8 +5,8 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/constant"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/constant"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Chat is chat peer.

@@ -9,10 +9,10 @@ import (
 	"github.com/stretchr/testify/require"
 	"rsc.io/qr"
 
-	"github.com/gotd/td/constant"
-	"github.com/gotd/td/testutil"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/tgmock"
+	"github.com/owpengram/owpengram-td/constant"
+	"github.com/owpengram/owpengram-td/testutil"
+	"github.com/owpengram/owpengram-td/tg"
+	"github.com/owpengram/owpengram-td/tgmock"
 )
 
 func testQR(t *testing.T, migrate func(ctx context.Context, dcID int) error) (*tgmock.Mock, QR) {

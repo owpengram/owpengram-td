@@ -3,10 +3,10 @@ package bin_test
 import (
 	"testing"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/telegram/message/entity"
-	"github.com/gotd/td/telegram/message/styling"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/telegram/message/entity"
+	"github.com/owpengram/owpengram-td/telegram/message/styling"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func BenchmarkDecodeSlice(b *testing.B) {

@@ -5,8 +5,8 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/constant"
-	"github.com/gotd/td/crypto"
+	"github.com/owpengram/owpengram-td/constant"
+	"github.com/owpengram/owpengram-td/crypto"
 )
 
 // TestOptions contains some common test server settings.

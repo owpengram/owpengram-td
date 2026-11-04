@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func TestInlineRow(t *testing.T) {
@@ -13,14 +13,15 @@ func TestInlineRow(t *testing.T) {
 
 	buttons := []tg.KeyboardInlineButton{
 		URL("Google!", "https://google.com?q=gotd"),
+		Callback("callback", []byte("payload")),
 		SwitchInline("inline", "query", true),
 		Game("game"),
 		Buy("buy"),
 		InputURLAuth(false, "text", "fwdText", "url", &tg.InputUserSelf{}),
+		URLAuth("text", "url", 1, "fwdText"),
 		InputUserProfile("me", &tg.InputUserSelf{}),
+		UserProfile("BotFather", 93372553),
 		WebView("demo", "https://webappcontent.telegram.org/demo"),
-		Copy("copy", "text to copy"),
-		Disabled("nothing"),
 	}
 
 	v, ok := InlineRow(buttons...).(*tg.ReplyInlineMarkup)

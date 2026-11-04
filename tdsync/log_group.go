@@ -6,7 +6,7 @@ import (
 	"github.com/go-faster/errors"
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/clock"
+	"github.com/owpengram/owpengram-td/clock"
 )
 
 // LogGroup is simple wrapper around CancellableGroup to log task state.

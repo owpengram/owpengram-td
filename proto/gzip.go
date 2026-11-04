@@ -11,7 +11,7 @@ import (
 	"github.com/klauspost/compress/gzip"
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
+	"github.com/owpengram/owpengram-td/bin"
 )
 
 type gzipPool struct {

@@ -10,13 +10,13 @@ import (
 	"github.com/go-faster/errors"
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/mtproto"
-	"github.com/gotd/td/pool"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/mtproto"
+	"github.com/owpengram/owpengram-td/pool"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/tg"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 type protoConn interface {
@@ -50,8 +50,6 @@ type Conn struct {
 	// InitConnection parameters.
 	appID  int          // immutable
 	device DeviceConfig // immutable
-	// layer is the schema layer sent in invokeWithLayer.
-	layer int // immutable
 
 	// setup is callback which called after initConnection, but before ready signaling.
 	// This is necessary to transfer auth from previous connection to another DC.
@@ -181,32 +179,13 @@ func (c *Conn) Run(ctx context.Context) (err error) {
 }
 
 func (c *Conn) waitSession(ctx context.Context) error {
-	// Fast path: config already available, do not log.
-	select {
-	case <-c.gotConfig.Ready():
-		return nil
-	default:
-	}
-
-	// Connection not ready yet. A request blocked here while updates keep
-	// flowing means the connection's read loop is alive but init
-	// (initConnection/help.getConfig) has not completed — the exact shape of
-	// "can receive updates but cannot issue requests".
-	start := c.clock.Now()
-	c.log.Debug(ctx, "Invoke waiting for connection to become ready")
 	select {
 	// Connection is considered ready only after mode-specific init succeeded.
 	case <-c.gotConfig.Ready():
-		c.log.Debug(ctx, "Connection became ready", log.Duration("waited", c.clock.Now().Sub(start)))
 		return nil
 	case <-c.dead.Ready():
-		c.log.Debug(ctx, "Connection died while waiting for readiness", log.Duration("waited", c.clock.Now().Sub(start)))
 		return pool.ErrConnDead
 	case <-ctx.Done():
-		c.log.Debug(ctx, "Context done while waiting for connection readiness",
-			log.Duration("waited", c.clock.Now().Sub(start)),
-			log.Error(ctx.Err()),
-		)
 		return ctx.Err()
 	}
 }
@@ -233,7 +212,7 @@ func (c *Conn) Invoke(ctx context.Context, input bin.Encoder, output bin.Decoder
 	}
 	q := c.wrapRequest(noopDecoder{input})
 	req := c.wrapRequest(&tg.InvokeWithLayerRequest{
-		Layer: c.layer,
+		Layer: tg.Layer,
 		Query: q,
 	})
 	err := c.proto.Invoke(ctx, req, output)
@@ -275,7 +254,7 @@ func (c *Conn) invokeCDN(
 }
 func (c *Conn) invokeCDNWrapped(ctx context.Context, input bin.Encoder, output bin.Decoder) error {
 	req := &tg.InvokeWithLayerRequest{
-		Layer: c.layer,
+		Layer: tg.Layer,
 		Query: c.cdnInitRequest(noopDecoder{input}),
 	}
 	return c.proto.Invoke(ctx, req, output)
@@ -366,7 +345,7 @@ func (c *Conn) init(ctx context.Context) error {
 		Query:          c.wrapRequest(&tg.HelpGetConfigRequest{}),
 	})
 	req := c.wrapRequest(&tg.InvokeWithLayerRequest{
-		Layer: c.layer,
+		Layer: tg.Layer,
 		Query: q,
 	})
 
@@ -404,7 +383,6 @@ func (c *Conn) init(ctx context.Context) error {
 	c.cfg = cfg
 	c.mux.Unlock()
 
-	c.log.Debug(ctx, "Connection initialized, ready to invoke", log.Int("this_dc", cfg.ThisDC))
 	c.gotConfig.Signal()
 	err := c.flushPendingSession()
 	return err
@@ -412,5 +390,16 @@ func (c *Conn) init(ctx context.Context) error {
 
 // Ping calls ping for underlying protocol connection.
 func (c *Conn) Ping(ctx context.Context) error {
-	return c.proto.Ping(ctx)
+	if err := c.waitSession(ctx); err != nil {
+		return errors.Wrap(err, "waitSession")
+	}
+	if err := c.proto.Ping(ctx); err != nil {
+		select {
+		case <-c.dead.Ready():
+			return errors.Wrap(pool.ErrConnDead, "ping on dead connection")
+		default:
+			return err
+		}
+	}
+	return nil
 }

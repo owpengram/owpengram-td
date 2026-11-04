@@ -4,7 +4,7 @@ package styling
 import (
 	"context"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 var (
@@ -248,16 +248,6 @@ func DiffReplace(s string, oldText string) StyledTextOption {
 func DiffDelete(s string) StyledTextOption {
 	return styledTextOption(s, func(b *textBuilder) error {
 		b.DiffDelete(s)
-		return nil
-	})
-}
-
-// TonAddress formats text as TonAddress entity.
-//
-// See https://core.telegram.org/constructor/messageEntityTonAddress.
-func TonAddress(s string) StyledTextOption {
-	return styledTextOption(s, func(b *textBuilder) error {
-		b.TonAddress(s)
 		return nil
 	})
 }

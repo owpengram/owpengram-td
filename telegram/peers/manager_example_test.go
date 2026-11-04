@@ -8,10 +8,10 @@ import (
 
 	"github.com/gotd/log/logzap"
 
-	"github.com/gotd/td/telegram"
-	"github.com/gotd/td/telegram/peers"
-	"github.com/gotd/td/telegram/updates"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram"
+	"github.com/owpengram/owpengram-td/telegram/peers"
+	"github.com/owpengram/owpengram-td/telegram/updates"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func ExampleManager() {

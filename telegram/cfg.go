@@ -5,8 +5,8 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/constant"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/constant"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Available MTProto default server addresses.

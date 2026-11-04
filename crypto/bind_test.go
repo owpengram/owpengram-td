@@ -9,7 +9,7 @@ import (
 
 	"github.com/gotd/ige"
 
-	"github.com/gotd/td/bin"
+	"github.com/owpengram/owpengram-td/bin"
 )
 
 func TestEncryptBindMessage(t *testing.T) {

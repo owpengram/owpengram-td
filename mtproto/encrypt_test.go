@@ -8,9 +8,9 @@ import (
 	"github.com/gotd/log"
 	"github.com/gotd/neo"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/testutil"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/testutil"
 )
 
 func benchEncryption(b *testing.B, c *Conn, n int) {

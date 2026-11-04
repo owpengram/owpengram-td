@@ -6,7 +6,7 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/telegram/updates"
+	"github.com/owpengram/owpengram-td/telegram/updates"
 )
 
 var _ updates.StateStorage = (*memStorage)(nil)

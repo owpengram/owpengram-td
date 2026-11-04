@@ -1,6 +1,6 @@
 package tmap
 
-import "github.com/gotd/td/bin"
+import "github.com/owpengram/owpengram-td/bin"
 
 // Constructor maps type id to type constructor.
 type Constructor struct {

@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-faster/xor"
 
-	"github.com/gotd/td/bin"
+	"github.com/owpengram/owpengram-td/bin"
 )
 
 // ServerSalt computes server salt.

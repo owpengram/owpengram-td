@@ -9,8 +9,8 @@ import (
 	"github.com/go-faster/errors"
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/clock"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/clock"
 )
 
 // Engine handles RPC requests.
@@ -149,11 +149,8 @@ func (e *Engine) Do(ctx context.Context, req Request) error {
 		return errors.Wrap(err, "retryUntilAck")
 	}
 
-	logger.Debug(ctx, "Acknowledged, waiting for result", log.Bool("sent", sent))
-
 	select {
 	case <-ctx.Done():
-		logger.Debug(ctx, "Context done before result", log.Bool("sent", sent), log.Error(ctx.Err()))
 		if !sent {
 			return ctx.Err()
 		}
@@ -186,10 +183,8 @@ func (e *Engine) Do(ctx context.Context, req Request) error {
 		// received before close: the server may have already processed it,
 		// so resending is not safe. Report plain context error, callers
 		// should not retry transparently.
-		logger.Debug(ctx, "Engine closed while waiting for result")
 		return errors.Wrap(e.reqCtx.Err(), "engine forcibly closed")
 	case <-done:
-		logger.Debug(ctx, "Result received", log.Error(resultErr))
 		return resultErr
 	}
 }
@@ -269,15 +264,9 @@ func (e *Engine) retryUntilAck(ctx context.Context, req Request) (sent bool, err
 func (e *Engine) NotifyResult(msgID int64, b *bin.Buffer) error {
 	e.mux.Lock()
 	fn, ok := e.rpc[msgID]
-	pending := len(e.rpc)
 	e.mux.Unlock()
 	if !ok {
-		// Result arrived but no caller is waiting for it: the request likely
-		// already timed out, was dropped, or the connection was replaced.
-		e.log.Warn(context.Background(), "rpc callback not set (result for unknown/expired request)",
-			log.Int64("msg_id", msgID),
-			log.Int("pending", pending),
-		)
+		e.log.Warn(context.Background(), "rpc callback not set", log.Int64("msg_id", msgID))
 		return nil
 	}
 

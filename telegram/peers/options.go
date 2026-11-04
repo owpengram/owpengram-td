@@ -4,8 +4,8 @@ import (
 	"github.com/gotd/log"
 	"golang.org/x/sync/singleflight"
 
-	"github.com/gotd/td/constant"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/constant"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Options is options of Manager

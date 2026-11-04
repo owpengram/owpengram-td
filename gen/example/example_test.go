@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tmap"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tmap"
 )
 
 func BenchmarkMessage_Encode(b *testing.B) {
@@ -103,6 +103,38 @@ func TestTargetsMessage_Encode(t *testing.T) {
 		t.Fatal(err)
 	}
 	require.Equal(t, msg, decoded)
+}
+
+func TestVectorVectorRoundTrip(t *testing.T) {
+	b := new(bin.Buffer)
+	want := TestVectorVector{
+		Value: [][]string{{"a", "b"}, nil, {"c"}},
+	}
+	require.NoError(t, want.Encode(b))
+
+	var got TestVectorVector
+	require.NoError(t, got.Decode(b))
+	require.Equal(t, want, got)
+}
+
+func TestVectorVectorPreallocationBoundary(t *testing.T) {
+	for _, n := range []int{1023, 1024, 1025} {
+		want := TestVectorVector{Value: make([][]string, n)}
+		want.Value[n/2] = make([]string, n)
+		for i := range want.Value[n/2] {
+			want.Value[n/2][i] = "element"
+		}
+		var wire bin.Buffer
+		require.NoError(t, want.Encode(&wire))
+		var got TestVectorVector
+		require.NoError(t, got.Decode(&wire))
+		require.Equal(t, want, got)
+		require.Zero(t, wire.Len())
+		if n == bin.PreallocateLimit {
+			require.Equal(t, n, cap(got.Value))
+			require.Equal(t, n, cap(got.Value[n/2]))
+		}
+	}
 }
 
 func TestGetUpdatesResp(t *testing.T) {

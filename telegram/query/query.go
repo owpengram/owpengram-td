@@ -2,13 +2,13 @@
 package query
 
 import (
-	"github.com/gotd/td/telegram/query/channels/participants"
-	"github.com/gotd/td/telegram/query/contacts/blocked"
-	"github.com/gotd/td/telegram/query/dialogs"
-	"github.com/gotd/td/telegram/query/messages"
-	"github.com/gotd/td/telegram/query/messages/stickers/featured"
-	"github.com/gotd/td/telegram/query/photos"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/query/channels/participants"
+	"github.com/owpengram/owpengram-td/telegram/query/contacts/blocked"
+	"github.com/owpengram/owpengram-td/telegram/query/dialogs"
+	"github.com/owpengram/owpengram-td/telegram/query/messages"
+	"github.com/owpengram/owpengram-td/telegram/query/messages/stickers/featured"
+	"github.com/owpengram/owpengram-td/telegram/query/photos"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Query is common struct to create query builders.

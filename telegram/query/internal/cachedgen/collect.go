@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/tools/go/packages"
 
-	"github.com/gotd/td/telegram/query/internal/genutil"
+	"github.com/owpengram/owpengram-td/telegram/query/internal/genutil"
 )
 
 func isHashField(field *types.Var) bool {
@@ -80,7 +80,7 @@ func collect(pkg *packages.Package) []CachedQuery {
 	var r []CachedQuery
 
 	for _, def := range genutil.Funcs(pkg, func(f genutil.Func) bool {
-		return f.Args().Len() == 2 && f.Results().Len() == 2
+		return f.ReceiverNamed("Client") && f.Args().Len() == 2 && f.Results().Len() == 2
 	}) {
 		args := def.Args()
 		req, ok := isCachedQuery(args)

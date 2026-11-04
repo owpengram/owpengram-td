@@ -8,11 +8,11 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/mtproto"
-	"github.com/gotd/td/pool"
-	"github.com/gotd/td/session"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/mtproto"
+	"github.com/owpengram/owpengram-td/pool"
+	"github.com/owpengram/owpengram-td/session"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func (c *Client) restoreConnection(ctx context.Context) error {

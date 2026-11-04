@@ -5,11 +5,11 @@ import (
 
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/exchange"
-	"github.com/gotd/td/tgtest"
-	"github.com/gotd/td/tgtest/services"
-	"github.com/gotd/td/transport"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/exchange"
+	"github.com/owpengram/owpengram-td/tgtest"
+	"github.com/owpengram/owpengram-td/tgtest/services"
+	"github.com/owpengram/owpengram-td/transport"
 )
 
 // Common returns common dispatcher.

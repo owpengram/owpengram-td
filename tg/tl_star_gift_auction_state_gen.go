@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -472,7 +472,7 @@ func (s *StarGiftAuctionState) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			s.BidLevels = make([]AuctionBidLevel, 0, headerLen%bin.PreallocateLimit)
+			s.BidLevels = make([]AuctionBidLevel, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value AuctionBidLevel
@@ -489,7 +489,7 @@ func (s *StarGiftAuctionState) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			s.TopBidders = make([]int64, 0, headerLen%bin.PreallocateLimit)
+			s.TopBidders = make([]int64, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Long()
@@ -541,7 +541,7 @@ func (s *StarGiftAuctionState) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			s.Rounds = make([]StarGiftAuctionRoundClass, 0, headerLen%bin.PreallocateLimit)
+			s.Rounds = make([]StarGiftAuctionRoundClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeStarGiftAuctionRound(b)

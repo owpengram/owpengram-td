@@ -3,8 +3,8 @@ package mtproto
 import (
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/proto"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/proto"
 )
 
 func gzip(b *bin.Buffer) (*bin.Buffer, error) {

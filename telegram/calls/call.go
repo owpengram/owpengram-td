@@ -9,7 +9,7 @@ import (
 	"github.com/go-faster/errors"
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Client places and answers Telegram 1:1 phone calls. It manages a single

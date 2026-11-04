@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/gotd/td/telegram/takeout"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/takeout"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func ExampleRun() {

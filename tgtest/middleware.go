@@ -3,8 +3,8 @@ package tgtest
 import (
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // UnpackInvoke is a simple Handler middleware to unpack some Invoke*-like requests.

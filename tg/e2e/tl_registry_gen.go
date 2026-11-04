@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -134,26 +134,26 @@ func TypesMap() map[uint32]string {
 // NamesMap returns mapping from type names to TL type ids.
 func NamesMap() map[string]uint32 {
 	return map[string]uint32{
-		"int":                                  IntTypeID,
-		"long":                                 LongTypeID,
-		"double":                               DoubleTypeID,
-		"string":                               StringTypeID,
-		"bytes":                                BytesTypeID,
-		"boolFalse":                            BoolFalseTypeID,
-		"boolTrue":                             BoolTrueTypeID,
-		"true":                                 TrueTypeID,
-		"decryptedMessage8":                    DecryptedMessage8TypeID,
-		"decryptedMessageService8":             DecryptedMessageService8TypeID,
-		"decryptedMessageMediaEmpty":           DecryptedMessageMediaEmptyTypeID,
-		"decryptedMessageMediaPhoto8":          DecryptedMessageMediaPhoto8TypeID,
-		"decryptedMessageMediaVideo8":          DecryptedMessageMediaVideo8TypeID,
-		"decryptedMessageMediaGeoPoint":        DecryptedMessageMediaGeoPointTypeID,
-		"decryptedMessageMediaContact":         DecryptedMessageMediaContactTypeID,
-		"decryptedMessageActionSetMessageTTL":  DecryptedMessageActionSetMessageTTLTypeID,
-		"decryptedMessageMediaDocument8":       DecryptedMessageMediaDocument8TypeID,
-		"decryptedMessageMediaAudio8":          DecryptedMessageMediaAudio8TypeID,
-		"decryptedMessageActionReadMessages":   DecryptedMessageActionReadMessagesTypeID,
-		"decryptedMessageActionDeleteMessages": DecryptedMessageActionDeleteMessagesTypeID,
+		"int":                                      IntTypeID,
+		"long":                                     LongTypeID,
+		"double":                                   DoubleTypeID,
+		"string":                                   StringTypeID,
+		"bytes":                                    BytesTypeID,
+		"boolFalse":                                BoolFalseTypeID,
+		"boolTrue":                                 BoolTrueTypeID,
+		"true":                                     TrueTypeID,
+		"decryptedMessage8":                        DecryptedMessage8TypeID,
+		"decryptedMessageService8":                 DecryptedMessageService8TypeID,
+		"decryptedMessageMediaEmpty":               DecryptedMessageMediaEmptyTypeID,
+		"decryptedMessageMediaPhoto8":              DecryptedMessageMediaPhoto8TypeID,
+		"decryptedMessageMediaVideo8":              DecryptedMessageMediaVideo8TypeID,
+		"decryptedMessageMediaGeoPoint":            DecryptedMessageMediaGeoPointTypeID,
+		"decryptedMessageMediaContact":             DecryptedMessageMediaContactTypeID,
+		"decryptedMessageActionSetMessageTTL":      DecryptedMessageActionSetMessageTTLTypeID,
+		"decryptedMessageMediaDocument8":           DecryptedMessageMediaDocument8TypeID,
+		"decryptedMessageMediaAudio8":              DecryptedMessageMediaAudio8TypeID,
+		"decryptedMessageActionReadMessages":       DecryptedMessageActionReadMessagesTypeID,
+		"decryptedMessageActionDeleteMessages":     DecryptedMessageActionDeleteMessagesTypeID,
 		"decryptedMessageActionScreenshotMessages": DecryptedMessageActionScreenshotMessagesTypeID,
 		"decryptedMessageActionFlushHistory":       DecryptedMessageActionFlushHistoryTypeID,
 		"decryptedMessage23":                       DecryptedMessage23TypeID,

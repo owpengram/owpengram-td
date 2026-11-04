@@ -6,8 +6,8 @@ import (
 
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/telegram/downloader"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/downloader"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 type downloadClient struct {

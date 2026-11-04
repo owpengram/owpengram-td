@@ -1,7 +1,7 @@
 package markup
 
 import (
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // ReplyKeyboardMarkupBuilder is a keyboard markup builder.
@@ -35,25 +35,6 @@ func (b *ReplyKeyboardMarkupBuilder) SingleUse() *ReplyKeyboardMarkupBuilder {
 // Other users in the group don’t see the keyboard.
 func (b *ReplyKeyboardMarkupBuilder) Selective() *ReplyKeyboardMarkupBuilder {
 	b.kb.Selective = true
-	return b
-}
-
-// Persistent sets flag to request clients to always show the keyboard when the regular
-// keyboard is hidden.
-func (b *ReplyKeyboardMarkupBuilder) Persistent() *ReplyKeyboardMarkupBuilder {
-	b.kb.Persistent = true
-	return b
-}
-
-// ForceReply sets flag to force the user to send a reply.
-func (b *ReplyKeyboardMarkupBuilder) ForceReply() *ReplyKeyboardMarkupBuilder {
-	b.kb.ForceReply = true
-	return b
-}
-
-// Placeholder sets the placeholder to be shown in the input field when the keyboard is active.
-func (b *ReplyKeyboardMarkupBuilder) Placeholder(placeholder string) *ReplyKeyboardMarkupBuilder {
-	b.kb.SetPlaceholder(placeholder)
 	return b
 }
 

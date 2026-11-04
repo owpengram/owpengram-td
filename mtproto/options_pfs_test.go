@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/gotd/td/crypto"
+	"github.com/owpengram/owpengram-td/crypto"
 )
 
 func TestOptionsSetDefaultsPFS(t *testing.T) {

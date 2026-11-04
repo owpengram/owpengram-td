@@ -8,15 +8,17 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/gotd/log"
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/tg"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/pool"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/tg"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 type captureProto struct {
 	invokeCalls int
+	pingCalls   int
 	lastInput   bin.Encoder
 	inputs      []bin.Encoder
 }
@@ -32,8 +34,32 @@ func (p *captureProto) Run(ctx context.Context, f func(ctx context.Context) erro
 	return f(ctx)
 }
 
-func (*captureProto) Ping(context.Context) error {
+func (p *captureProto) Ping(context.Context) error {
+	p.pingCalls++
 	return nil
+}
+
+func TestConnPingWaitsForReadyAndRejectsDeadConnection(t *testing.T) {
+	p := &captureProto{}
+	c := newTestConn(ConnModeUpdates, p)
+
+	done := make(chan error, 1)
+	go func() { done <- c.Ping(context.Background()) }()
+	select {
+	case err := <-done:
+		t.Fatalf("Ping returned before readiness: %v", err)
+	case <-time.After(20 * time.Millisecond):
+	}
+	if p.pingCalls != 0 {
+		t.Fatalf("proto Ping calls = %d before readiness", p.pingCalls)
+	}
+	c.gotConfig.Signal()
+	require.NoError(t, <-done)
+	require.Equal(t, 1, p.pingCalls)
+
+	dead := newTestConn(ConnModeUpdates, &captureProto{})
+	dead.dead.Signal()
+	require.ErrorIs(t, dead.Ping(context.Background()), pool.ErrConnDead)
 }
 
 func newTestConn(mode ConnMode, proto protoConn) *Conn {
@@ -42,7 +68,6 @@ func newTestConn(mode ConnMode, proto protoConn) *Conn {
 		dc:          203,
 		appID:       42,
 		device:      DeviceConfig{AppVersion: "test-app"},
-		layer:       tg.Layer,
 		proto:       proto,
 		clock:       clock.System,
 		log:         log.For(log.Nop),

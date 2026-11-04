@@ -1,7 +1,7 @@
 package dcs
 
 import (
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Prod returns production DC list.

@@ -11,10 +11,10 @@ import (
 
 	"go.uber.org/multierr"
 
-	"github.com/gotd/td/bin"
-	"github.com/gotd/td/tdjson"
-	"github.com/gotd/td/tdp"
-	"github.com/gotd/td/tgerr"
+	"github.com/owpengram/owpengram-td/bin"
+	"github.com/owpengram/owpengram-td/tdjson"
+	"github.com/owpengram/owpengram-td/tdp"
+	"github.com/owpengram/owpengram-td/tgerr"
 )
 
 // No-op definition for keeping imports.
@@ -279,7 +279,7 @@ func (m *MessageActionChatCreate) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			m.Users = make([]int64, 0, headerLen%bin.PreallocateLimit)
+			m.Users = make([]int64, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Long()
@@ -812,7 +812,7 @@ func (m *MessageActionChatAddUser) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			m.Users = make([]int64, 0, headerLen%bin.PreallocateLimit)
+			m.Users = make([]int64, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Long()
@@ -3731,7 +3731,7 @@ func (m *MessageActionSecureValuesSentMe) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			m.Values = make([]SecureValue, 0, headerLen%bin.PreallocateLimit)
+			m.Values = make([]SecureValue, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value SecureValue
@@ -3900,7 +3900,7 @@ func (m *MessageActionSecureValuesSent) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			m.Types = make([]SecureValueTypeClass, 0, headerLen%bin.PreallocateLimit)
+			m.Types = make([]SecureValueTypeClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeSecureValueType(b)
@@ -4596,7 +4596,7 @@ func (m *MessageActionInviteToGroupCall) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			m.Users = make([]int64, 0, headerLen%bin.PreallocateLimit)
+			m.Users = make([]int64, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Long()
@@ -6832,7 +6832,7 @@ func (m *MessageActionRequestedPeer) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			m.Peers = make([]PeerClass, 0, headerLen%bin.PreallocateLimit)
+			m.Peers = make([]PeerClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePeer(b)
@@ -8397,7 +8397,7 @@ func (m *MessageActionRequestedPeerSentMe) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			m.Peers = make([]RequestedPeerClass, 0, headerLen%bin.PreallocateLimit)
+			m.Peers = make([]RequestedPeerClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodeRequestedPeer(b)
@@ -12174,7 +12174,7 @@ func (m *MessageActionConferenceCall) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			m.OtherParticipants = make([]PeerClass, 0, headerLen%bin.PreallocateLimit)
+			m.OtherParticipants = make([]PeerClass, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := DecodePeer(b)
@@ -12441,7 +12441,7 @@ func (m *MessageActionTodoCompletions) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			m.Completed = make([]int, 0, headerLen%bin.PreallocateLimit)
+			m.Completed = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -12458,7 +12458,7 @@ func (m *MessageActionTodoCompletions) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			m.Incompleted = make([]int, 0, headerLen%bin.PreallocateLimit)
+			m.Incompleted = make([]int, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			value, err := b.Int()
@@ -12619,7 +12619,7 @@ func (m *MessageActionTodoAppendTasks) DecodeBare(b *bin.Buffer) error {
 		}
 
 		if headerLen > 0 {
-			m.List = make([]TodoItem, 0, headerLen%bin.PreallocateLimit)
+			m.List = make([]TodoItem, 0, min(headerLen, bin.PreallocateLimit))
 		}
 		for idx := 0; idx < headerLen; idx++ {
 			var value TodoItem

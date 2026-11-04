@@ -7,7 +7,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/gotd/td/testutil"
+	"github.com/owpengram/owpengram-td/testutil"
 )
 
 func FuzzRSA(f *testing.F) {

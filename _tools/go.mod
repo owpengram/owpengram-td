@@ -1,4 +1,4 @@
-module github.com/gotd/td/_tools
+module github.com/owpengram/owpengram-td/_tools
 
 go 1.25.0
 

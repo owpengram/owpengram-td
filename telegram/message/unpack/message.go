@@ -3,8 +3,8 @@ package unpack
 import (
 	"github.com/go-faster/errors"
 
-	"github.com/gotd/td/telegram/internal/upconv"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/internal/upconv"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 func extractClass(u tg.UpdateClass) (tg.MessageClass, bool) {

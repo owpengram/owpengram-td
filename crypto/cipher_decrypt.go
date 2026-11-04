@@ -5,7 +5,7 @@ import (
 
 	"github.com/gotd/ige"
 
-	"github.com/gotd/td/bin"
+	"github.com/owpengram/owpengram-td/bin"
 )
 
 // DecryptFromBuffer decodes EncryptedMessage and decrypts it.

@@ -11,13 +11,13 @@ import (
 	"github.com/gotd/log"
 	"nhooyr.io/websocket"
 
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/crypto"
-	"github.com/gotd/td/exchange"
-	"github.com/gotd/td/mtproto"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/tmap"
-	"github.com/gotd/td/transport"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/crypto"
+	"github.com/owpengram/owpengram-td/exchange"
+	"github.com/owpengram/owpengram-td/mtproto"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/tmap"
+	"github.com/owpengram/owpengram-td/transport"
 )
 
 // Server is a MTProto server structure.

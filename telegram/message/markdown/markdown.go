@@ -12,9 +12,9 @@ import (
 	"github.com/go-faster/errors"
 	"github.com/yuin/goldmark/text"
 
-	"github.com/gotd/td/telegram/message/entity"
-	"github.com/gotd/td/telegram/message/styling"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/telegram/message/entity"
+	"github.com/owpengram/owpengram-td/telegram/message/styling"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // Markdown parses given input from reader as Markdown and adds parsed entities

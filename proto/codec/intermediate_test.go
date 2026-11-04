@@ -7,7 +7,7 @@ import (
 	"github.com/go-faster/errors"
 	"github.com/stretchr/testify/require"
 
-	"github.com/gotd/td/bin"
+	"github.com/owpengram/owpengram-td/bin"
 )
 
 func TestIntermediate(t *testing.T) {
@@ -27,17 +27,17 @@ func TestIntermediate(t *testing.T) {
 		codec := Intermediate{}
 		t.Run("Read", func(t *testing.T) {
 			var b bin.Buffer
-			b.PutInt(maxMessageSize + 10)
+			b.PutInt(MaxMessageSize + 10)
 
 			var out bin.Buffer
-			if err := codec.Read(&b, &out); !errors.Is(err, invalidMsgLenErr{}) {
+			if err := codec.Read(&b, &out); !errors.Is(err, ErrInvalidMessageLength) {
 				t.Error(err)
 			}
 		})
 		t.Run("Write", func(t *testing.T) {
-			buf := make([]byte, maxMessageSize+10)
+			buf := make([]byte, MaxMessageSize+10)
 
-			if err := codec.Write(nil, &bin.Buffer{Buf: buf}); !errors.Is(err, invalidMsgLenErr{}) {
+			if err := codec.Write(nil, &bin.Buffer{Buf: buf}); !errors.Is(err, ErrInvalidMessageLength) {
 				t.Error(err)
 			}
 		})

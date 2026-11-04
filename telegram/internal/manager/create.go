@@ -7,10 +7,10 @@ import (
 	"github.com/cenkalti/backoff/v4"
 	"github.com/gotd/log"
 
-	"github.com/gotd/td/clock"
-	"github.com/gotd/td/mtproto"
-	"github.com/gotd/td/tdsync"
-	"github.com/gotd/td/tg"
+	"github.com/owpengram/owpengram-td/clock"
+	"github.com/owpengram/owpengram-td/mtproto"
+	"github.com/owpengram/owpengram-td/tdsync"
+	"github.com/owpengram/owpengram-td/tg"
 )
 
 // SetupCallback is an optional setup connection callback.
@@ -18,12 +18,8 @@ type SetupCallback = func(ctx context.Context, invoker tg.Invoker) error
 
 // ConnOptions is a Telegram client connection options.
 type ConnOptions struct {
-	DC   int
-	Test bool
-	// Layer is the schema layer sent in invokeWithLayer.
-	//
-	// If not provided, tg.Layer will be used.
-	Layer   int
+	DC      int
+	Test    bool
 	Device  DeviceConfig
 	Handler Handler
 	Setup   SetupCallback
@@ -45,9 +41,6 @@ func defaultBackoff(c clock.Clock) func(ctx context.Context) backoff.BackOff {
 func (c *ConnOptions) setDefaults(connClock clock.Clock) {
 	if c.DC == 0 {
 		c.DC = 2
-	}
-	if c.Layer == 0 {
-		c.Layer = tg.Layer
 	}
 	// It's okay to use zero value Test.
 	c.Device.SetDefaults()
@@ -74,7 +67,6 @@ func CreateConn(
 		dc:          connOpts.DC,
 		appID:       appID,
 		device:      connOpts.Device,
-		layer:       connOpts.Layer,
 		clock:       opts.Clock,
 		handler:     connOpts.Handler,
 		sessionInit: tdsync.NewReady(),

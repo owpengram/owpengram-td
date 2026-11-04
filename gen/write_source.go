@@ -2,6 +2,7 @@ package gen
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"sort"
 	"strings"
@@ -12,14 +13,20 @@ import (
 
 // config is input data for templates.
 type config struct {
-	Layer      int
-	Flags      GenerateFlags
-	Package    string
-	Structs    []structDef
-	Interfaces []interfaceDef
-	Mappings   map[string][]constructorMapping
-	Registry   []bindingDef
-	Errors     []errCheckDef
+	Layer         int
+	Flags         GenerateFlags
+	Package       string
+	Structs       []structDef
+	Interfaces    []interfaceDef
+	Mappings      map[string][]constructorMapping
+	Registry      []bindingDef
+	Errors        []errCheckDef
+	LayerMetadata *layerMetadata
+	LayerCodec    *layerCodecModel
+	LayerRPC      *layerRPCModel
+	LayerScan     *layerScanModel
+	LayerRoute    *layerRouteModel
+	LayerWrapper  *layerWrapperModel
 }
 
 // FileSystem represents a directory of generated package.
@@ -221,6 +228,99 @@ func (g *Generator) WriteSource(fs FileSystem, pkgName string, t *template.Templ
 			return err
 		}
 	}
+	return nil
+}
 
+// WriteTLProfileSource writes the public multi-layer sidecar. Canonical Go
+// bindings remain owned by WriteSource; this target contains only exact
+// profile metadata and, as later stages are enabled, sparse execution plans.
+func (g *Generator) WriteTLProfileSource(fs FileSystem, pkgName string, t *template.Template) error {
+	if g == nil || g.schemaSet == nil {
+		return errors.New("tlprofile source requires a schema-set generator")
+	}
+	w := &writer{
+		pkg:               pkgName,
+		fs:                fs,
+		t:                 t,
+		buf:               new(bytes.Buffer),
+		wrote:             map[string]bool{},
+		wroteConstructors: map[string]struct{}{},
+		generateFlags:     g.generateFlags,
+	}
+	metadata, err := g.buildLayerMetadata()
+	if err != nil {
+		return errors.Wrap(err, "tlprofile metadata")
+	}
+	rpc, err := g.buildLayerRPCModel()
+	if err != nil {
+		return errors.Wrap(err, "tlprofile RPC metadata")
+	}
+	if err := w.Generate("tlprofile_metadata", "tl_profile_metadata_gen.go", config{
+		Package:       pkgName,
+		LayerMetadata: metadata,
+		LayerRPC:      rpc,
+	}); err != nil {
+		return errors.Wrap(err, "tlprofile metadata source")
+	}
+	scan, err := g.buildLayerScanModel()
+	if err != nil {
+		return errors.Wrap(err, "tlprofile static scanner")
+	}
+	if err := w.Generate("tlprofile_scan", "tl_profile_scan_gen.go", config{
+		Package:   pkgName,
+		LayerScan: scan,
+	}); err != nil {
+		return errors.Wrap(err, "tlprofile static scanner source")
+	}
+	route, err := g.buildLayerRouteModel()
+	if err != nil {
+		return errors.Wrap(err, "tlprofile sparse routes")
+	}
+	if err := w.Generate("tlprofile_route", "tl_profile_route_gen.go", config{
+		Package:    pkgName,
+		LayerRoute: route,
+	}); err != nil {
+		return errors.Wrap(err, "tlprofile sparse route source")
+	}
+	sparse, err := g.buildLayerSparseCodecModel(pkgName)
+	if err != nil {
+		return errors.Wrap(err, "tlprofile sparse codec")
+	}
+	if err := w.Generate("tlprofile_sparse_runtime", "tl_profile_sparse_runtime_gen.go", config{
+		Package: pkgName, LayerMetadata: metadata, LayerCodec: sparse,
+	}); err != nil {
+		return errors.Wrap(err, "tlprofile sparse codec runtime")
+	}
+	for _, bucket := range sparse.WireBuckets {
+		part := *sparse
+		part.Wires = bucket.Wires
+		if err := w.Generate("tlprofile_sparse_wires", fmt.Sprintf("tl_profile_sparse_wire_%02d_gen.go", bucket.Index), config{
+			Package: pkgName, LayerCodec: &part,
+		}); err != nil {
+			return errors.Wrapf(err, "tlprofile sparse codec wire bucket %d", bucket.Index)
+		}
+	}
+	if err := w.Generate("tlprofile_sparse_families", "tl_profile_sparse_families_gen.go", config{Package: pkgName, LayerCodec: sparse}); err != nil {
+		return errors.Wrap(err, "tlprofile sparse codec families")
+	}
+	if err := w.Generate("tlprofile_sparse_classes", "tl_profile_sparse_classes_gen.go", config{Package: pkgName, LayerCodec: sparse}); err != nil {
+		return errors.Wrap(err, "tlprofile sparse codec classes")
+	}
+	if err := w.Generate("tlprofile_sparse_dynamic", "tl_profile_sparse_dynamic_gen.go", config{Package: pkgName, LayerCodec: sparse}); err != nil {
+		return errors.Wrap(err, "tlprofile sparse codec dynamic")
+	}
+	if err := w.Generate("tlprofile_sparse_entry", "tl_profile_sparse_entry_gen.go", config{Package: pkgName, LayerCodec: sparse}); err != nil {
+		return errors.Wrap(err, "tlprofile sparse codec entry")
+	}
+	if err := w.Generate("tlprofile_overlay", "tl_profile_overlay_gen.go", config{Package: pkgName, LayerCodec: sparse}); err != nil {
+		return errors.Wrap(err, "tlprofile client RPC overlay")
+	}
+	wrapper, err := g.buildLayerWrapperModel()
+	if err != nil {
+		return errors.Wrap(err, "tlprofile wrapper parser")
+	}
+	if err := w.Generate("tlprofile_wrapper", "tl_profile_wrapper_gen.go", config{Package: pkgName, LayerWrapper: wrapper}); err != nil {
+		return errors.Wrap(err, "tlprofile wrapper parser source")
+	}
 	return nil
 }
