@@ -11,9 +11,10 @@ import (
 	"github.com/owpengram/owpengram-td/tg"
 )
 
-func TestLayer232CanonicalProfile(t *testing.T) {
-	if tg.Layer != 232 || ProfileCanonical != Profile232 {
-		t.Fatalf("canonical Layer = tg:%d profile:%d, want 232", tg.Layer, ProfileCanonical)
+func TestLayer232IsExactHistoricalProfile(t *testing.T) {
+	// Layer 233 became canonical; 232 stays an exact historical profile.
+	if tg.Layer != 233 || ProfileCanonical != Profile233 || Profile232 >= ProfileCanonical {
+		t.Fatalf("canonical Layer = tg:%d profile:%d, want 233 with 232 historical", tg.Layer, ProfileCanonical)
 	}
 }
 
@@ -240,7 +241,13 @@ func TestLayer232LegacyStarGiftWithdrawalKeepsSRPProof(t *testing.T) {
 			Password: password,
 		}
 		wire := layer232HistoricalWithdrawalWire(password)
-		for profile := Profile225; profile <= Profile232; profile++ {
+		// The historical constructor exists in exact 225-231 and, through the
+		// canonical Go model that owns the promoted method, in the canonical
+		// profile. Exact 232 has only the tmp_password method (see below).
+		for profile := Profile225; profile <= ProfileCanonical; profile++ {
+			if profile == Profile232 {
+				continue
+			}
 			if got := layer232Encode(t, profile, want); !bytes.Equal(got, wire) {
 				t.Fatalf("%d legacy withdrawal wire %x != literal %x", profile, got, wire)
 			}

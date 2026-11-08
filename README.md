@@ -8,8 +8,8 @@ It is [gotd/td](https://github.com/gotd/td) (a pure-Go MTProto 2.0 implementatio
 Layer at once. Requests are decoded and every response, update and difference is encoded for the
 exact Layer the client negotiated, instead of only the newest one.
 
-- `tg` is the canonical Go model of the newest Layer (currently **232**).
-- `tlprofile` holds the exact historical profiles (**225–232**) and their generated codecs,
+- `tg` is the canonical Go model of the newest Layer (currently **233**).
+- `tlprofile` holds the exact historical profiles (**225–233**) and their generated codecs,
   admission rules and dispatcher.
 - `gen` / `cmd/gotdgen` build both from the versioned schemas in
   [`_schema/layers`](_schema/layers/README.md).

@@ -56,7 +56,7 @@ func TestRealLayerPolicy(t *testing.T) {
 	if unresolved := resolved.LayerConversionPlan().Report.Unresolved(); len(unresolved) != 0 {
 		t.Fatalf("real policy leaves %d unresolved obligations; first=%+v", len(unresolved), unresolved[0])
 	}
-	if got, want := len(document.Entries), 249; got != want {
+	if got, want := len(document.Entries), 305; got != want {
 		t.Fatalf("reviewed policy entry count = %d, want %d", got, want)
 	}
 	codec, err := resolved.buildLayerCodecModel("tg")
@@ -310,6 +310,15 @@ func realLayerResolution(obligation LayerObligation) (LayerObligationResolution,
 		switch obligation.Semantic.QName {
 		case "updateWalletState", "updateSentWalletTransaction", "updateWalletGaslessInfo", "updateWalletTonConnectSession", "updateWalletTonConnectPendingDisconnect":
 			return LayerObligationResolution{Action: LayerResolveReject}, true, nil
+		case "updateBotWidgetQuery", "updateInlineBotWidgetQuery", "updateBotWidgetCopyQuery":
+			// Layer 233 widget queries can carry wallet sign requests and sent
+			// transactions: like the wallet updates above, never drop them
+			// silently for a bot that cannot answer.
+			return LayerObligationResolution{Action: LayerResolveReject}, true, nil
+		case "updateMessageWidgetData":
+			// Carries pts/pts_count: dropping it would leave a pts gap in a
+			// historical client, so the server must not emit it there.
+			return LayerObligationResolution{Action: LayerResolveReject}, true, nil
 		}
 		return LayerObligationResolution{Action: LayerResolveDrop}, true, nil
 	}
@@ -342,6 +351,12 @@ func realRequiredLayerResolution(obligation LayerObligation) (LayerObligationRes
 		}
 	case "auth.sentCodePaymentRequired", "pageListOrderedItemBlocks", "pageListOrderedItemText":
 		return defaulted()
+	case "channels.toggleForum":
+		// Layer 233 adds a required sidebar flag. A historical client has no
+		// forum sidebar, so its request turns the forum on or off without one.
+		if obligation.Direction == LayerDirectionProfileToCanonical && obligation.OtherField == "sidebar" {
+			return defaulted()
+		}
 	case "inputStorePaymentAuthCode":
 		return LayerObligationResolution{Action: LayerResolveReject}, true, nil
 	case "messages.chatInviteJoinResultWebView":

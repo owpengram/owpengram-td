@@ -35,6 +35,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/owpengram/owpengram-td/gen/semantic"
 )
 
 const (
@@ -125,7 +127,11 @@ func run(ref string, wantLayer int, dir string, canonical, force bool) error {
 			continue
 		}
 		if l.SHA256 == entry.SHA256 && l.Commit == entry.Commit {
-			fmt.Printf("Layer %d is already imported from %s; nothing to do.\n", gotLayer, short(commit))
+			fmt.Printf("Layer %d is already imported from %s.\n", gotLayer, short(commit))
+			if canonical {
+				// Still make sure the merged canonical schema follows it.
+				return rebuildCanonicalSchema(manifestPath, dir, data)
+			}
 			return nil
 		}
 		if !force {
@@ -151,6 +157,14 @@ func run(ref string, wantLayer int, dir string, canonical, force bool) error {
 	if err := writeManifest(manifestPath, raw, doc); err != nil {
 		return err
 	}
+	if canonical {
+		// The canonical Layer also owns _schema/telegram.tl (the merged schema
+		// next to layers/). Rebuild it like gotdgen -schema-import does, or it
+		// stays on the previous Layer while the generated code moves on.
+		if err := rebuildCanonicalSchema(manifestPath, dir, data); err != nil {
+			return err
+		}
+	}
 
 	fmt.Printf("Imported Layer %d from tdesktop %s (%s)\n  file   %s\n  blob   %s\n  sha256 %s\n",
 		gotLayer, ref, short(commit), filepath.Join(dir, entry.File), entry.Blob, entry.SHA256)
@@ -158,6 +172,33 @@ func run(ref string, wantLayer int, dir string, canonical, force bool) error {
 		fmt.Printf("Canonical Layer is now %d.\n", gotLayer)
 	}
 	fmt.Println("Next: review _schema/layers/policy.json for this Layer, then run `go generate .`.")
+	return nil
+}
+
+// rebuildCanonicalSchema writes ../telegram.tl from the updated manifest, the
+// canonical Layer source and the manifest overlays.
+func rebuildCanonicalSchema(manifestPath, dir string, canonicalSource []byte) error {
+	manifest, err := semantic.ReadManifest(manifestPath)
+	if err != nil {
+		return err
+	}
+	overlays := make(map[string][]byte, len(manifest.Overlays))
+	for _, overlay := range manifest.Overlays {
+		data, err := os.ReadFile(filepath.Join(dir, filepath.FromSlash(overlay.File)))
+		if err != nil {
+			return fmt.Errorf("read canonical overlay %q: %w", overlay.File, err)
+		}
+		overlays[overlay.File] = data
+	}
+	rendered, err := semantic.RenderCanonicalSchema(manifest, canonicalSource, overlays)
+	if err != nil {
+		return err
+	}
+	path := filepath.Clean(filepath.Join(dir, "..", "telegram.tl"))
+	if err := os.WriteFile(path, rendered, 0o644); err != nil {
+		return err
+	}
+	fmt.Printf("  canonical schema %s\n", path)
 	return nil
 }
 
